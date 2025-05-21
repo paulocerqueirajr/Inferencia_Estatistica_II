@@ -1,0 +1,1005 @@
+---
+format:
+  revealjs:
+    theme: ["theme/q-theme.scss"]
+    slide-number: c/t
+    #logo: "faest.png"
+    #footer: "[https://github.com/paulocerqueirajr](https://https://github.com/paulocerqueirajr)"
+    code-copy: true
+    center-title-slide: false
+    lang: pt
+    transition: fade
+    transition-speed: default
+highlight-style: a11y
+code-link: true
+height: 1080
+width: 1900
+execute: 
+  eval: true
+  echo: true
+---
+
+<h1> Inferência Estatística II </h1>
+
+<h2> Apresentação da disciplina </h2>
+
+<hr>
+
+<br>
+
+<h3> Prof. Paulo Cerqueira Jr - cerqueirajr@ufpa.br <br>
+Faculdade de Estatística - FAEST <br>
+Instituto de Ciências Exatas e Naturais - ICEN
+</h3>
+
+<h3>  </h3>
+<br>
+
+<h3> [https://github.com/paulocerqueirajr](https://https://github.com/paulocerqueirajr)
+
+![](github.jpg){.absolute top=550 left=845 height="90"}
+
+
+![](faest.png){.absolute top=5 left=1700 height="210"}
+
+<!-- ![](https://www.faest.icen.ufpa.br/images/110.png){.absolute top=5 left=1400 height="200"} -->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# [Introdução]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Introdução
+<hr>
+
+
+* Em estatística, uma hipótese é uma afirmativa sobre um propriedade da população (ex.: média).
+* Um teste de hipóteses é um procedimento padrão (regra de decisão) para se testar uma afirmativa sobre uma propriedade da população.
+
+:::{.callout-note} 
+## Exemplos:
+  - A produtividade média de milho em Santa Catarina é de 2300kg/ha. (teste para a média);
+  - A proporção de alevinos de tilápia do Nilo que atingem o peso adequado em 120 dias é de 54\%. (teste para a proporção)
+  - A sobrevivência de mudas não dependem da época do plantio. (teste qui-quadrado);
+  - A proporção de fixação de fitoplâncton em dois tipos de solos é a mesma (Teste de comparação de porporções).
+
+:::
+
+
+# [Testes de hipóteses]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Testes de hipóteses
+<hr>
+<br/>
+<br/>
+
+* São ferramentas estatísticas que quantificam quão plausíveis são os resultados observados em uma amostra, podem ou não, ser verdadeiro.
+* Além disto, um teste também define um ponto de corte (regra de decisão) para tomarmos a decisão de aceitar ou rejeitar a hipótese testada.
+* Veremos testes para afirmações sobre a média e proporção de uma população.
+
+
+
+## Introdução
+<hr>
+<br/>
+
+> Um criador do *Colossoma macropomum* (tambaqui), criado à densidade de $1,0\ \text{peixe}/m^{2}/120\ \text{dias}$, afirma que os mesmos tem peso médio de $360,7g$ e uma variância de $30,7g^{2}$.
+
+<br/>
+
+Uma amostra com $22$ peixes foi formada e vetificou-se que o peso médio foi igual à $358,2g$. Dessa forma, temos duas situações:
+<br/>
+
+
+1. $H_{0}$: O criador está correto.  (Hipótese nula)
+
+2. $H_{1}$: O criador está errado. (Hipótese alternativa)
+
+<br/>
+
+. . .
+
+O que de fato queremos saber?
+
+. . . 
+
+<br/>
+
+`Se a média é igual a $360,7g$ ou diferente!!`
+
+
+## Testes de hipóteses
+<hr>
+<br/>
+
+
+:::{#def-def1}
+## Hipóteses estatística
+
+É uma afirmação ou conjetura sobre o parâmetro, ou parâmetros, da distribuição de probabilidades de uma característica, X, da população ou de uma v.a.
+:::
+
+<br/>
+
+:::{#def-def2}
+## Teste de hipóteses
+
+Um teste de hipóteses estatística é o procedimento ou regra de decisão que nos possibilita decidir por $H_{0}$ (Hipótese Nula) ou $H_{1}$ (Hipótese Alternativa), com base a informação contida na amostra.
+:::
+
+
+## Procedimentos gerais
+<hr>
+
+
+
+* População: $X$ com f.d ou f.p ($f(x\mid \theta)$).
+
+* $\theta$ é um parâmetro desconhecido, e temos alguma hipótese sobre o valor verdadeiro de $\theta$, por exemplo, afirmamos que seu valor é $\theta_0$.
+
+* Observamos uma a.a. de $X$, e com ela desejamos comprovar ou não tal hipótese. 
+
+* Assim, queremos testar
+
+$$H_0: \theta = \theta_0$$
+
+* Temos também que explicitar a hipótese que aceitaremos caso $H_0$ seja rejeitada,
+$$\underbrace{H_1 : \theta\neq \theta_0}_{\text{Bilateral}} \quad  \text{ou} \quad \underbrace{H_1: \theta < \theta_0}_{\text{Unilateral à esquerda.}} \quad \text{ou} \quad \underbrace{H_1: \theta > \theta_0}_{\text{Unilateral à direita.}},$$
+
+que dependerá das informações que o problema traz. 
+
+## Erros associados aos testes de hipóteses
+<hr>
+
+* Devemos tomar como $H_0$ aquela hipótese que, rejeitada, conduza a um erro de tipo I mais importante de evitar.
+
+* Por exemplo, suponha um experimento para determinar se um produto A é ou não cancerígeno. Após realizado o teste, podemos concluir: 
+
+$$\text{(i) A é cancerígeno ou (ii) A não é cancerígeno.}$$
+
+* Cada uma dessas conclusões pode estar errada e temos os dois tipos de erro:
+
+
+1. concluir que o produto é cancerígeno, quando ele não é.
+
+2. concluir que o produto não é cancerígeno, quando ele é.
+
+. . .
+
+Qual o pior erro?
+
+. . .
+
+O **segundo erro** é pior, este deve ser o erro tipo I (rejeitar $H_0$, quando ela é verdadeira), portanto,
+
+$$H_0 : \text{A é cancerígeno.}$$
+
+
+
+# [Erros associados]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+
+## Erros associados aos testes de hipóteses:
+<hr>
+<br/>
+
+* Os dois erros que podem ser cometidos ao se realizar um teste de hipóteses são:
+  - Rejeitar a hipótese nula (H0), quando tal hipótese é verdadeira;
+  - Não rejeitar a hipótese nula (H0) quando ela deveria ser rejeitada.
+
+* De forma mais simplificada temos:
+
+| Decisão/ Situação | $H_{0}$ verdade | $H_{0}$ falso |
+|:---:|:---:|:---:|
+| Rejeita $H_{0}$ | Erro I | Certo |
+| Não rejeita $H_{0}$ | Certo | Erro II |
+
+
+## Erros associados aos testes de hipóteses
+<hr>
+
+* Tais erros são expressos em termos de probabilidade.
+* O nível de significância ou probabilidade do Erro I é dada por
+
+  $$\alpha=P(\mbox{Rejeitar } H_{0} \mid H_{0} \mbox{ verdadeira}).$$
+
+* Em geral o `nível de siginificância` gira em torno de $1\%, 5\%, 10\%$.
+
+
+* A probabilidade do Erro II é dada por
+
+  $$\beta=P(\mbox{Não rejeitar} \  H_{0} \mid H_{0}  \mbox{ falsa}).$$
+
+* O poder o teste é dado por:
+
+$$\text{Poder}=1-\beta=1-P(\mbox{Não rejeitar} \  H_{0} \mid H_{0}  \mbox{ falsa})=P(\mbox{Rejeitar} \  H_{0} \mid H_{0}  \mbox{ falsa}).$$
+
+
+## Erros associados aos testes de hipóteses
+<hr>
+
+
+```{r fig1, echo=FALSE, message=FALSE, warning=FALSE, fig.height=10, fig.width=12, fig.align='center'}
+
+
+par(mfrow=c(2,3), oma=c(0,0,2,0))
+
+plot(function(x) dnorm(x) ,xlim=c(-4, 4), ylim=c(0, 0.4),main="Teste Bilateral", xlab="Média Amostral", ylab="Densidade", lwd=4, col="lightblue")
+abline(v=0, lty=4)
+xx <- seq(-4, -1.96, l=200)
+yy <- rbind(cbind(rev(xx), 0), cbind(xx, dnorm(xx)))
+polygon(yy, col="lightblue", border = NA)
+text(-2.2, 0.02, labels=expression(alpha/2), col="black")
+xx <- seq(1.96, 4, l=200)
+yy <- rbind(cbind(rev(xx), 0), cbind(xx, dnorm(xx)))
+polygon(yy, col="lightblue", border= NA)
+text(2.2, 0.02, labels=expression(alpha/2), col="black")
+
+plot(function(x) dnorm(x) ,xlim=c(-4, 4), ylim=c(0, 0.4),main="Teste Unilateral \n a Esquerda", xlab="Média Amostral", ylab="Densidade", lwd=2, col="lightblue")
+abline(v=0, lty=4)
+xx <- seq(-4, -1.96, l=200)
+yy <- rbind(cbind(rev(xx), 0), cbind(xx, dnorm(xx)))
+polygon(yy, col="lightblue", border=NA)
+text(-2.2, 0.02, labels=expression(alpha), col="black")
+
+
+plot(function(x) dnorm(x) ,xlim=c(-4, 4), ylim=c(0, 0.4),main="Teste Unilateral \n a Direita", xlab="Média Amostral", ylab="Densidade", lwd=2, col="lightblue")
+abline(v=0, lty=4)
+xx <- seq(1.96, 4, l=200)
+yy <- rbind(cbind(rev(xx), 0), cbind(xx, dnorm(xx)))
+polygon(yy, col="lightblue", border=NA)
+text(2.2, 0.02, labels=expression(alpha), col="black")
+
+
+plot(1,4, axes=FALSE, xlab="", ylab="", col="white")
+text(1,3.5,expression(H[a] :  mu != mu[0]), cex=2)
+text(1,4.5,expression(H[0] :  mu == mu[0]), cex=2)
+
+
+plot(1,4, axes=FALSE, xlab="", ylab="", col="white")
+text(1,3.5,expression(H[a] :  mu < mu[0]), cex=2)
+text(1,4.5,expression(H[0] :  mu == mu[0]), cex=2)
+
+
+plot(1,4, axes=FALSE, xlab="", ylab="", col="white")
+text(1,3.5,expression(H[a] :  mu > mu[0]), cex=2)
+text(1,4.5,expression(H[0] :  mu == mu[0]), cex=2)
+
+title(main=expression(paste("Distribuição Gaussiana com ", mu==0, " e ", sigma==1)), outer=TRUE)
+
+```
+
+
+# [Testes mais poderosos]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Testes mais poderosos
+<hr>
+
+> Hipótese Nula Simples contra Alternativa Simples
+
+$$H_0 : \theta = \theta_0 \quad \text{contra} \quad H_1 : \theta = \theta_1$$
+
+* Fixado o valor de $\alpha$, a probabilidade do erro tipo I, vamos procurar a região crítica $RC$ que tenha o menor valor de $\beta$, ou seja, tenha maior poder dentre todos os testes com nível menor ou igual a $\alpha$. 
+
+* No caso discreto, temos
+
+$$\alpha = P_{H_0}(X \in RC) = \sum_{\boldsymbol{x} \in RC} f(\boldsymbol{x}|\theta_0) \quad \text{e} \quad \beta = \sum_{\boldsymbol{x} \in \overline{RC}} f(\boldsymbol{x}|\theta_1),$$
+
+onde $\overline{RC}$ é o conjunto complementar de $RC$.
+
+
+
+## Testes mais poderosos
+<hr>
+
+:::{#exm-exm1}
+Suponha que queremos testar $H_{0}:\theta=\theta_{0}$ contra $H_{1}:\theta=\theta_{1}$, com base em uma única observação da v.a. $X$, com f.p. dada na tabela abaixo.
+:::
+
+
+| $X$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|------|---|---|---|---|---|---|
+| $f(x|\theta_{0})$ | 0,02 | 0,03 | 0,05 | 0,05 | 0,35 | 0,50 |
+| $f(x|\theta_{1})$ | 0,04 | 0,05 | 0,08 | 0,12 | 0,41 | 0,30 |
+
+* Fixando $\alpha=0,05$, vamos procurar a RC que fornece o teste mais poderoso. 
+
+* A Tabela 3 apresenta as possíveis RC para $\alpha=0,05$, com os respectivos valores de $\beta=P$ (Erro tipo II).
+
+
+| $RC$      | $\alpha$ | $\overline{RC}$    | $\beta$ |
+|-----------|----------|--------------------|---------|
+| $\{0,1\}$ | 0,05     | $\{2,3,4,5\}$      | 0,91    |
+| $\{2\}$   | 0,05     | $\{0,1,3,4,5\}$    | 0,92    |
+| $\{3\}$   | 0,05     | $\{0,1,2,4,5\}$    | 0,88    |
+
+Portanto, o teste MP (que tem o menor $\beta$) é dado pela $RC=\{3\}$.
+
+
+
+
+## Testes mais poderosos
+<hr>
+
+:::{#lem-lem1} 
+O teste que minimiza uma combinação linear dos erros, do tipo $a\alpha+b\beta$, é dado pela seguinte região crítica:
+:::
+
+$$RC^{*}=\left\{\boldsymbol{x}:\frac{L_{1}(\boldsymbol{x})}{L_{0}(\boldsymbol{x})}\geq\frac{a}{b}\right\}$$
+
+onde $a$ e $b$ são conhecidos (com $b>0$) e
+
+$$L_{1}(\boldsymbol{x})=\prod_{i=1}^{n}f(x_{i}|\theta_{1}) \qquad L_{0}(\boldsymbol{x})=\prod_{i=1}^{n}f(x_{i}|\theta_{0})$$
+
+*(Demonstração na pg. 95 do livro de Bolfarine & Sandoval)*
+
+
+## Testes mais poderosos
+<hr>
+
+:::{#lem-lem2}  
+## Lema de Neyman-Pearson
+
+Considere o teste com região crítica dada por
+:::
+
+$$RC^{*}=\left\{\boldsymbol{x}:\frac{L_{1}(\boldsymbol{x})}{L_{0}(\boldsymbol{x})}\geq k\right\}$$
+
+Então, $RC^{*}$ é a melhor região crítica de nível $\alpha=\alpha(RC^{*})$ para testar $H_{0}:\theta=\theta_{0}$ contra $H_{1}:\theta=\theta_{1}$, isto é, $\beta(RC^{*})\leq\beta(RC)$ para qualquer outro teste $RC$ com $\alpha(RC)\leq\alpha$.
+
+*(Demonstração na pg. 96 do livro de Bolfarine & Sandoval)*
+
+. . . 
+
+:::{.callout-note}
+## Observações:
+
+1. $L_{0}(\boldsymbol{x})$ é a função de verossimilhança sob $H_{0}$ e representa a evidência trazida pelos dados em favor de $H_{0}$;
+
+2. $L_{1}(\boldsymbol{x})$ é a função de verossimilhança sob $H_{1}$ e representa a evidência trazida pelos dados em favor de $H_{1}$;
+
+3. O teste apresentado no Lema 2 é o teste MP de nível $\alpha$ para testar $H_{0}:\theta=\theta_{0}$ contra $H_{1}:\theta=\theta_{1}$. Este teste rejeita $H_{0}$ quando a evidência em favor de $H_{1}$ é maior que a evidência em favor de $H_{0}$.
+
+:::
+
+
+
+
+## Testes mais poderosos
+<hr>
+
+
+:::{#exm-exm2} 
+Seja $X_{1},\cdots,X_{n}$ uma a.a. de $X\sim N(\mu,1)$. Obtenha o teste MP para testar $H_{0}:\mu=0$ contra $H_{1}:\mu=1$.
+:::
+
+* A função de verossimilhança é dada por
+
+$$L(\mu,\boldsymbol{x})=\left(\frac{1}{\sqrt{2\pi}}\right)^{n}e^{-\sum_{i=1}^{n} \frac{(x_i-1)^{2}}{2}}.$$
+
+* Sob $H_{1}$ e sob $H_{0}$, temos respectivamente
+
+$$L_{1}(\boldsymbol{x})=\left(\frac{1}{\sqrt{2\pi}}\right)^{n}e^{-\sum_{i=1}^{n} \frac{(x_i-1)^{2}}{2}} \quad\text{e}\quad L_{0}(\boldsymbol{x})=\left(\frac{1}{\sqrt{2\pi}}\right)^{n}e^{-\sum_{i=1}^{n}\frac{x_i^{2}}{2}}.$$
+
+* Portanto, o teste MP rejeita $H_{0}$ se
+
+$$\frac{L_{1}(\boldsymbol{x})}{L_{0}(\boldsymbol{x})}=e^{\sum_{i=1}^{n}x_i-\frac{n}{2}} \geq k$$
+
+
+## Testes mais poderosos
+<hr>
+
+* Ou seja, se
+
+$$\sum_{i=1}^{n}x_i \geq \log k+\frac{n}{2}=c.$$
+
+* Portanto, a RC do teste MP é dada por
+
+$$RC=\left\{\sum_{i=1}^{n}X_i \geq c\right\}.$$
+
+* Assim, se tomarmos $\alpha=0,05$ e $n=9$, temos:
+
+$$0,05=P_{H_0}\left(\sum_{i=1}^{9}X_i \geq c\right).$$
+
+
+## Testes mais poderosos
+<hr>
+
+* Agora, sob $H_0 : \mu = 0$, temos que $\sum_{i=1}^n X_i \sim N(0,9)$, logo
+
+$$0,05 = P_{H_{0}}\left(\sum_{i=1}^{n}X_{i}\geq c\right) = P\left(Z\geq\frac{c-0}{3}\right),$$
+
+e temos que
+
+$$\frac{c}{3} = 1,64 \quad\Longleftrightarrow\quad c = 4,92$$
+
+* Portanto, o teste MP consiste em rejeitar $H_{0}$ se $\sum_{i=1}^{n}X_{i}\geq 4,92$. Associado a esta RC podemos calcular o valor de $\beta = P(\text{aceitar }H_{0}|H_{1}\text{ é verdadeira})$:
+
+$$\beta = P_{H_{1}}\left(\sum_{i=1}^{n}X_{i} < 4,92\right) = P\left(Z < \frac{4,92-9}{3}\right) = P(Z < -1,36) = 0,09.$$
+
+* O poder do teste é dado por $\pi = 1-\beta = 0,91.
+
+
+
+
+
+
+## Testes mais poderosos
+<hr>
+
+:::{#exm-exm3}  
+Seja $X_{1},\cdots,X_{n}$ uma a.a. de $X\sim N(\mu,\sigma^{2})$, onde $\mu$ é conhecido. Obtenha o teste MP para testar $H_{0}:\sigma^{2}=\sigma_{0}^{2}$ contra $H_{1}:\sigma^{2}=\sigma_{1}^{2}$, com $\sigma_{1}^{2}>\sigma_{0}^{2}$.
+:::
+
+* Portanto, o teste MP rejeita $H_{0}$ se
+
+$$\frac{L_{1}(\textbf{x})}{L_{0}(\textbf{x})}=\left(\frac{\sigma_{0}}{\sigma_{1}}\right)^{n}e^{\left(\frac{1}{2\sigma_{0}^{2}}-\frac{1}{2\sigma_{1}^{2}}\right)\sum_{l=1}^{n}(x_{l}-\mu)^{2}} \geq k$$
+
+* Ou seja, se
+
+$$e^{\left(\frac{1}{2\sigma_{0}^{2}}-\frac{1}{2\sigma_{1}^{2}}\right)\sum_{l=1}^{n}(x_{l}-\mu)^{2}} \geq k\left(\frac{\sigma_{1}}{\sigma_{0}}\right)^{n}$$
+
+## Testes mais poderosos
+<hr>
+
+ou, equivalentemente, se
+
+$$\sum_{i=1}^{n}(x_{i}-\mu)^{2} \geq \frac{\log\left[k\left(\frac{\sigma_{1}}{\sigma_{0}}\right)^{n}\right]}{\left(\frac{1}{2\sigma_{0}^{2}}-\frac{1}{2\sigma_{1}^{2}}\right)}=c.$$
+
+* Portanto, a RC do teste MP é dada por
+
+$$RC=\left\{\sum_{i=1}^{n}(X_{i}-\mu)^{2} \geq c\right\}$$
+
+* Fixado o valor de $\alpha$ e usando o fato de que sob $H_{0}$ temos
+
+$$\sum_{i=1}^{n}\frac{(X_{i}-\mu)^{2}}{\sigma_{0}^{2}} \sim \chi_{n}^{2},$$
+
+podemos facilmente obter o valor de $c$.
+
+
+
+# [Testes Uniformemente Mais Poderosos (UMP)]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+> Caso I: Hipótese Nula Simples contra Alternativa Composta
+
+$$H_{0}:\theta=\theta_{0} \quad \text{contra} \quad H_{1}:\theta\in\Theta_{1}$$
+
+:::{#def-def4} 
+Um teste com região crítica $RC^{*}$ é dito ser UMP para testar $H_{0}:\theta=\theta_{0}$ contra $H_{1}:\theta\in\Theta_{1}$, se ele é MP de nível $\alpha$ para testar $H_{0}:\theta=\theta_{0}$ contra $H_{1}:\theta=\theta_{1}$, qualquer que seja $\theta_{1}\in\Theta_{1}$.
+:::
+
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+
+:::{#exm-exm5}
+Seja $X_{1},\cdots,X_{n}$ uma a.a. de $X\sim N(\mu,1)$. Obtenha o teste UMP para testar $H_{0}:\mu=0$ contra $H_{1}:\mu>0$.
+:::
+
+* Vamos inicialmente obter o teste MP para testar $H_{0}:\mu=0$ contra $H_{1}:\mu=\mu_{1} (\mu_{1}>0)$. 
+
+* Assim, o teste MP rejeita $H_{0}$ se
+
+$$\frac{L_{1}(x)}{L_{0}(x)} = e^{\mu_{1}\sum_{l=1}^{n}x_{l}-\frac{n\mu_{1}^{2}}{2}} \geq k$$
+
+* Ou seja, se
+
+$$\sum_{i=1}^{n}x_{i} \geq \frac{1}{\mu_{1}}\left(\log k + \frac{n\mu_{1}^{2}}{2}\right) = c.$$
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+* Como a região crítica do teste MP não depende do particular $\mu_{1}$ especificado em $H_{1}$, ela também será a RC do teste UMP para testar $H_{0}:\mu=0$ contra $H_{1}:\mu>0$:
+
+$$RC = \left\{\sum_{i=1}^{n}X_{i} \geq c\right\}.$$
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+:::{#exm-exm6} 
+Seja $X_1, \cdots, X_n$ uma a.a. de $X \sim N(\mu, 1)$. Obtenha o teste UMP para testar $H_0 : \mu = 0$ contra $H_1 : \mu \neq 0$.
+:::
+
+* Vimos no @exm-exm2 que o teste MP para testar $H_0 : \mu = 0$ contra $H_1 : \mu = 1$ é dado pela seguinte região crítica:
+
+$$RC = \left\{\sum_{i=1}^n X_i \geq c\right\}$$
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+
+* Agora, vamos obter a RC do teste MP para testar $H_{0}:\mu=0$ contra $H_{1}:\mu=-1$. O teste MP consiste em rejeitar $H_{0}$ se
+
+$$\frac{L_{1}(\boldsymbol{x})}{L_{0}(\boldsymbol{x})} = \frac{\left(\frac{1}{\sqrt{2\pi}}\right)^{n}e^{-\sum_{i=1}^{n}\frac{(x_{i}+1)^{2}}{2}}}{\left(\frac{1}{\sqrt{2\pi}}\right)^{n}e^{-\sum_{i=1}^{n}\frac{x_{i}^{2}}{2}}} = e^{-\sum_{i=1}^{n}x_{i}-\frac{n}{2}} \geq k$$
+
+* Ou seja, se
+
+$$\sum_{i=1}^{n}x_{i} \leq -\left(\log k + \frac{n}{2}\right) = c_{1}.$$
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+* Portanto, temos
+
+$$RC = \left\{\sum_{i=1}^{n}X_{i} \leq c_{1}\right\}.$$
+
+* Vemos então que a RC do teste MP depende do particular valor de $\mu$ que tomarmos na hipótese alternativa. 
+
+* Concluímos, portanto, que não existe teste UMP para testar $H_{0}:\mu=0$ contra $H_{1}:\mu\neq 0$.
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+
+> Caso II: Hipóteses Compostas
+
+$$H_0 : \theta \in \Theta_0 \quad \text{contra} \quad H_1 : \theta \in \Theta_1$$
+
+:::{#thm-thm1} 
+No caso em que $X_1, \cdots, X_n$ seguem uma distribuição da família exponencial, temos que o teste UMP para testar $H_0 : \theta = \theta_0$ contra $H_1 : \theta > \theta_0$ é também UMP para testar $H_0 : \theta \leq \theta_0$ contra $H_1 : \theta > \theta_0$. Também o teste UMP para testar $H_0 : \theta = \theta_0$ contra $H_1 : \theta < \theta_0$ é UMP para testar $H_0 : \theta \geq \theta_0$ contra $H_1 : \theta < \theta_0$.
+:::
+
+<br/>
+
+:::{#exm-exm7}
+Seja $X_1, \cdots, X_n$ uma a.a. de $X \sim N(\mu, 1)$. De acordo com o Teorema 1, temos do exemplo 10 que o teste UMP para testar $H_0 : \mu \leq 0$ contra $H_1 : \mu > 0$ tem região crítica dada por
+:::
+
+$$RC = \left\{\sum_{i=1}^n X_i \geq c\right\}.$$
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+
+
+:::{#exm-exm8} 
+Seja $X_1, \cdots, X_n$ uma a.a. de $X \sim \text{Bernoulli}(\theta)$. Obtenha o teste UMP para testar $H_0 : \theta \geq 0,5$ contra $H_1 : \theta < 0,5$.
+:::
+
+* Vamos, inicialmente, obter o teste MP para testar $H_0 : \theta = 0,5$ contra $H_1 : \theta = \theta_1, \theta_1 < 0,5$. Pelo Lema 2, temos que o teste MP rejeita $H_0$ se
+
+$$\frac{L_1(\boldsymbol{x})}{L_0(\boldsymbol{x})} = \frac{\theta_1^{\sum_{i=1}^n x_i} (1 - \theta_1)^{n-\sum_{i=1}^n x_i}}{0,5^{\sum_{i=1}^n x_i} 0,5^{n-\sum_{i=1}^n x_i}} = \left( \frac{\theta_1}{1 - \theta_1} \right)^{\sum_{i=1}^n x_i} \left( \frac{1 - \theta_1}{0,5} \right)^n \geq k$$
+
+ou seja, se
+
+$$\left( \frac{\theta_1}{1 - \theta_1} \right)^{\sum_{i=1}^n x_i} \geq k \left( \frac{0,5}{1 - \theta_1} \right)^n.$$
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+* Aplicando logaritmo em ambos os lados da desigualdade, temos que o teste MP rejeita $H_0$ se
+
+$$(\sum_{i=1}^n x_i) \log \left( \frac{\theta_1}{1 - \theta_1} \right) \geq \log \left[ k \left( \frac{0,5}{1 - \theta_1} \right)^n \right]$$
+
+* Agora, como $\theta_1 < 0,5$, então $\left( \frac{\theta_1}{1 - \theta_1} \right) < 1$. Logo, $\log \left( \frac{\theta_1}{1 - \theta_1} \right) < 0$. Portanto, o teste MP rejeita $H_0$ se
+
+$$\sum_{i=1}^n x_i \leq \frac{\log \left[ k \left( \frac{0,5}{1 - \theta_1} \right)^n \right]}{\log \left( \frac{\theta_1}{1 - \theta_1} \right)} = c$$
+
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+* Como o teste MP não depende do particular valor de $\theta_{1}$, pela Definição 1 este teste é UMP para testar $H_0 : \theta = 0,5$ contra $H_1 : \theta < 0,5$. E pelo Teorema 1 ele será UMP para testar $H_0 : \theta \geq 0,5$ contra $H_1 : \theta < 0,5$:
+
+$$RC = \left\{\sum_{i=1}^{n} X_i \leq c\right\}.$$
+
+* Se tomarmos $\alpha = 0,055$ e $n = 10$, temos que
+
+$$\alpha = P_{H_0}\left(\sum_{i=1}^{n} X_i \leq c\right).$$
+
+## Testes Uniformemente Mais Poderosos (UMP)
+<hr>
+
+* Sob $H_0$, temos que $\sum_{i=1}^{n} X_i \sim Binomial(10; \, 0,5)$, logo
+
+$$0,055 = P_{H_0}\left(\sum_{i=1}^{n} X_i \leq c\right) \iff c = 2.$$
+
+* Portanto, a RC do teste UMP para testar $H_0 : \theta \geq 0,5$ contra $H_1 : \theta < 0,5$, ao nível $\alpha = 0,055$ é dada por
+
+$$RC = \left\{\sum_{i=1}^{n} X_i \leq 2\right\}.$$
+
+
+# [Função poder]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Função Poder
+<hr>
+
+:::{#def-def4} 
+A função de poder $\pi(\theta)$ com região crítica $RC$ para testar $H_0 : \theta = \theta_0$ contra $H_1 : \theta \in \Theta_1$ é dada por 
+
+$$\pi(\theta) = P_\theta [X \in RC],$$
+
+ou seja, é a probabilidade de rejeitar $H_0$ para $\theta \in \Theta$. Notemos que $\pi(\theta_0) = \alpha$.
+
+:::
+
+:::{#exm-exm7}
+Sejam $X_1, \ldots, X_n$, uma amostra aleatória de tamanho $n$ da distribuição $N(\mu, 1)$. 
+:::
+* Consideremos o problema de testar $H_0 : \mu = 0$ contra $H_1 : \mu > 0$. 
+
+* Conforme visto, a região crítica do teste U.M.P. é dada por $RC = \{x; \sum_{i=1}^n x_i \geq c\}$. 
+
+* Sendo $n = 9$ e $\alpha = 0,05$, temos que $c = 1,64\sqrt{9} = 4,92$, de modo que $RC = \{x; \sum_{i=1}^n x_i \geq 4,92\}$. A função de poder é, então, dada por
+
+
+$$\pi(\mu) = P_\mu \left[ \sum_{i=1}^9 X_i \geq 4,92 \right] = 1 - \Phi \left( \frac{4,92 - 9\mu}{3} \right),$$
+
+onde $\Phi(\cdot)$ denota a função de distribuição acumulada da distribuição $N(0, 1)$. 
+
+
+
+## Função Poder
+<hr>
+
+
+:::columns
+::::column
+* Então,
+
+$$\pi(0,3) = 1 - \Phi(0,74) = 1 - 0,77 = 0,23.$$
+
+De modo similar, 
+
+* $\pi(0,5) = 1 - \Phi(0,14) = 0,44$;
+
+* $\pi(1,0) = 0,91$;
+
+* $\pi(0,0)=0,05=\alpha$.
+
+::::
+::::column
+
+```{r, fig.height=8, fig.width=8}
+
+pimu <- function(mu){ return(1-pnorm(((4.92-9*mu)/3))) }
+
+mu <- seq(-0.2,1.7, length.out=1000)
+y <- pimu(mu)
+plot(mu, y, type="l", ylab=expression(pi(mu)), xlab=expression(mu), cex=1.2)
+abline(h = 1, lty=2)
+
+```
+
+
+::::
+:::
+
+
+# [Testes da Razão de Verossimilhanças Generalizadas]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+* Vimos que os testes UMP existem apenas em situações especiais.
+
+* Essas situações compreendem o caso das famílias exponenciais unidimensionais.
+
+* Vimos também que, em geral, não existem testes UMP para testar $H_{0}:\theta=\theta_{0}$ versus $H_{1}:\theta\neq\theta_{0}$.
+
+* Também não existe teste UMP na maioria dos casos em que a distribuição envolve mais de um parâmetro desconhecido como, por exemplo, a $N(\mu,\sigma^{2})$ com $\mu$ e $\sigma^{2}$ desconhecidos.
+
+* Um procedimento que produz testes razoáveis e que pode ser utilizado em muitos casos, sem muita dificuldade, é o Teste da Razão de Verossimilhanças Generalizada (TRVG).
+
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+* Consideremos uma situação bastante geral onde as hipóteses de interesse são
+
+$$H_{0}:\theta\in\Theta_{0}\quad\text{versus}\quad H_{1}:\theta\in\Theta_{1}$$
+
+onde $\Theta=\Theta_{0}\cup\Theta_{1}$, $\Theta_{0}\cap\Theta_{1}=\emptyset$, $\Theta_{0}\neq\emptyset$ e $\Theta_{1}\neq\emptyset$.
+
+* O TRVG pode ser definido como o teste com região crítica dada por (ver Bickel e Doksum(1976))
+
+$$RC=\bigg{\{}\mathbf{x};\frac{\sup_{\theta\in\Theta_{1}}L(\theta; \mathbf{x})}{\sup_{\theta\in\Theta_{0}}L(\theta;\mathbf{x})}\geq c\bigg{\}}.$$
+
+* Podemos notar que, quando as hipóteses são simples, ou seja, $\Theta_{0}=\{\theta_{0}\}$ e $\Theta_{1}=\{\theta_{1}\}$, o TRVG coincide com o Lema de Neyma-Pearson.
+
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+Como
+
+$$\frac{\sup_{\theta\in\Theta}L(\theta;\mathbf{x})}{\sup_{\theta\in\Theta_{0}}L(\theta;\mathbf{x})}=\max\bigg{\{}1,\frac{\sup_{\theta\in\Theta_{1}}L(\theta;\mathbf{x})}{\sup_{\theta\in\Theta_{0}}L(\theta;\mathbf{x})}\bigg{\}}.$$
+
+Por facilidades computacionais o TRVG pode também ser definido como
+
+$$RC=\bigg{\{}\mathbf{x};\lambda(\mathbf{x})=\frac{\sup_{\theta\in\Theta_{0}}L(\theta;\mathbf{x})}{\sup_{\theta\in\Theta}L(\theta;\mathbf{x})}\leq c \bigg{\}}.$$
+
+Observemos que $0\leq\lambda(\mathbf{x})\leq 1$, pois o numerador é o supremo com relação a $\theta$ pertencente a um subconjunto de $\Theta$ ($\Theta_{0}\in\Theta$), enquanto que o denominador é o supremo sobre todo conjunto $\Theta$. 
+
+
+* Se a hipótese $H_{0}$ for verdadeira, esperamos que $\lambda(\mathbf{x})$ esteja `próximo` de $1$.
+
+* se a hipótese $H_{0}$ for falsa, esperamos que o denominador seja grande em relação ao numerador, e, portanto, $\lambda(\mathbf{x})$ deve ser `próximo` de zero.
+
+
+
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+* Para determinar $c$ temos que resolver a equação
+
+$$\alpha = \sup_{\theta\in\Theta_{0}} P(\lambda(\mathbf{X}) \leq c).$$
+
+* Para isso, precisamos da distribuição da estatística $\lambda(\mathbf{X})$ que, em geral, não é simples de ser obtida.
+
+* Ou podemos encontrar uma função $h$ estritamente crescente no domínio de $\lambda(\mathbf{x})$ tal que $h(\lambda(\mathbf{X}))$ tenha uma forma simples e uma distribuição conhecida e tabelada sob a hipótese $H_{0}$.
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+> Para implementação do TRVG, os seguintes passos devem ser seguidos:
+
+1. obter o estimador de máxima verossimilhança (EMV) $\hat{\theta}$ de $\theta$;  
+
+2. obter o EMV $\hat{\theta}_{0}$ de $\theta$, quando $\theta\in\Theta_{0}$;  
+
+3. calcular $\lambda(\mathbf{X}) = \frac{L(\hat{\theta}_{0};\mathbf{X})}{L(\hat{\theta};\mathbf{X})}$;  
+
+4. encontrar a função $h$;  
+
+5. obter $c$, resolvendo a equação $\alpha = P_{H_{0}}(h(\lambda(\mathbf{X})) \leq c)$.
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+:::{#exm-exm8} 
+Consideremos da $N(\mu, 1)$, mas agora o interesse é testar $H_{0}: \mu=\mu_{0}$ versus $H_{1}: \mu\neq\mu_{0}$. 
+:::
+
+
+* Vimos não existe teste UMP nesse caso. 
+
+* Pelo exemplo, temos que o EMV de $\mu$ é dado por $\hat{\mu}=\overline{X}$. 
+
+* Como a hipótese $H_{0}$ só especifica um único valor para $\mu$, o numerador de $\lambda(\mathbf{x})$ é $L(\mu_{0};\mathbf{x})$ de modo que
+
+$$\lambda(\mathbf{x}) = \frac{(2\pi)^{-n/2}\mathrm{e}^{-\frac{1}{2}\sum(x_{i}-\mu_{0})^{2}}}{(2\pi)^{-n/2}\mathrm{e}^{-\frac{1}{2}\sum(x_{i}-\overline{x})^{2}}} = \mathrm{e}^{-\frac{1}{2}\left[\sum(x_{i}-\mu_{0})^{2}-\sum(x_{i}-\overline{x})^{2}\right]}.$$
+
+* Podemos simplificar $\lambda(\mathbf{x})$ usando o fato de que
+
+$$\sum(x_{i}-\mu_{0})^{2} = \sum(x_{i}-\overline{x})^{2} + n(\overline{x}-\mu_{0})^{2}.$$
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+* Temos que o TRVG rejeita $H_{0}$ quando
+
+$$\mathrm{e}^{-\frac{n}{2}(\overline{x}-\mu_{0})^{2}} \leq c,$$
+
+que é equivalente a rejeitar $H_{0}$ quando
+
+$$|\overline{x}-\mu_{0}| \geq \sqrt{-2\log c/n}.$$
+
+* Portanto a região crítica do TRVG é dada por
+
+$$RC = \{\mathbf{x}; \sqrt{n}|\overline{x}-\mu_{0}| \geq a\}.$$
+
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+* Fixado $\alpha$, obtemos $a$ de forma que
+
+$$\alpha = P_{H_{0}}(\sqrt{n}|\overline{X}-\mu_{0}| \geq a)$$
+
+* Como sob $H_{0}$, $\sqrt{n}(\overline{X}-\mu_{0}) \sim N(0,1)$, temos que $a = z_{\alpha/2}$. 
+
+* Sendo $\alpha = 0,05$ temos que $RC = \{\mathbf{x}; \sqrt{n}|\overline{x}-\mu_{0}| \geq 1,96\}$. 
+
+
+* Considerando $\mu_{0} = 0$, $n = 9$, $\sum_{i=1}^{n}x_{i} = 3,4$, `não rejeitamos` $H_{0}$ pois $\sqrt{9}|3,4/9 - 0|= 1.33 < 1,96$. 
+
+
+
+* Nesse caso, a função de poder do teste é
+
+$$\pi(\mu) = P_{\mu}(\sqrt{n}|\overline{X}-\mu| \geq 1,96) = 1 - P(-1,96 - \sqrt{n}\mu \leq \sqrt{n}(\overline{X} - \mu) \leq 1,96 - \sqrt{n}\mu)$$
+
+$$= 1 - [\Phi(1,96 - \sqrt{n}\mu) - \Phi(-1,96 - \sqrt{n}\mu)],$$
+
+pois temos que $\sqrt{n}(\overline{X} - \mu) \sim N(0,1)$ quando $\mu$ é o verdadeiro valor do parâmetro. 
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+
+:::columns
+::::column
+
+* Notemos que $\pi(0) = 1 - P(-1,96 \leq Z \leq 1,96) = 0,05$
+
+* De maneira similar, $\pi(0,3) = \pi(-0,3) = 0,15$.
+
+
+::::
+::::column
+
+```{r, fig.height=8, fig.width=10}
+
+pimu <- function(mu, n){ 
+  
+  dif <- pnorm(1.96-sqrt(n)*mu) - pnorm(-1.96-sqrt(n)*mu)
+  return(1-dif) 
+}
+
+mu <- seq(-1.7,1.7, length.out=1000)
+y <- pimu(mu, n=9)
+plot(mu, y, type="l", ylab=expression(pi(mu)), xlab=expression(mu), cex=1.2)
+abline(h = 1, lty=2)
+
+```
+
+
+::::
+:::
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+
+:::{#exm-exm9} 
+Sejam $X_{1},\ldots,X_{n}$ uma amostra aleatória da variável aleatória $X\sim N(\mu,\sigma^{2})$ com $\mu$ e $\sigma^{2}$ desconhecidos. 
+
+* O interesse é testar $H_{0}:\mu=\mu_{0}$ versus $H_{1}:\mu\neq\mu_{0}$. 
+:::
+
+
+* Nesse caso,
+
+$$\lambda(\mathbf{x})=\frac{(2\pi)^{-n/2}(\hat{\sigma}_{0}^{2})^{-n/2}\mathrm{e}^{-\frac{1}{2\hat{\sigma}_{0}^{2}}}\sum(x_{i}-\mu_{0})^{2}}{(2\pi)^{-n/2}(\hat{\sigma}^{2})^{-n/2}\mathrm{e}^{-\frac{1}{2\hat{\sigma}^{2}}}\sum(x_{i}-\overline{x})^{2}}=\left(\frac{\hat{\sigma}^{2}}{\hat{\sigma}_{0}^{2}}\right)^{n/2}$$
+
+Usando $\sum(x_{i}-\mu_{0})^{2} = \sum(x_{i}-\overline{x})^{2} + n(\overline{x}-\mu_{0})^{2}.$, temos que o TRVG rejeita $H_{0}$ quando
+
+$$\left(\frac{1}{1+\frac{n(\overline{x}-\mu_{0})^{2}}{\sum(x_{i}-\overline{x})^{2}}}\right)^{n/2}\leq c$$
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+que é equivalente a rejeitar $H_{0}$ quando
+
+$$\frac{\sqrt{n}|\overline{x}-\mu_{0}|}{\sqrt{\frac{\sum(x_{i}-\overline{x})^{2}}{n-1}}}\geq\sqrt{(c^{-2/n}-1)(n-1)}$$
+
+
+
+
+* Portanto a região crítica do TRVG é dada por
+
+$$RC=\left\{\mathbf{x};\frac{\sqrt{n}|\overline{x}-\mu_{0}|}{s}\geq a\right\}$$
+
+onde $s^{2}=\frac{\sum(x_{i}-\overline{x})^{2}}{n-1}$. 
+
+
+* Sob a hipótese $H_{0}$, $\frac{\sqrt{n}(\overline{X}-\mu_{0})}{S}\sim t_{n-1}$.
+
+* Então, dado $\alpha=0,05$ e $n=9$ obtemos, usando a tabela da distribuição $t$ com $8$ graus de liberdade, $a=2,306$. 
+
+* Se $\mu_{0}=0$, $\overline{x}=0,68$ e $s=1,2$, então $\frac{\sqrt{n}(\overline{x}-\mu_{0})}{s}=1,7$ de modo que `não rejeitamos` $H_{0}$.
+
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+:::{#exm-exm10}  
+Consideremos novamente, $X_{1},\ldots,X_{n}$ uma amostra aleatória da variável aleatória $X\sim N(\mu,\sigma^{2})$ com $\mu$ e $\sigma^{2}$ desconhecidos, mas sendo que o interesse é testar $H_0 : \sigma^2 = \sigma_0^2$ versus $H_1 : \sigma^2 \neq \sigma_0^2$. Nesse caso,
+:::
+
+$$\Theta_0 = \{ (\mu, \sigma^2); -\infty < \mu < \infty, \sigma^2 = \sigma_0^2 \}$$
+
+e
+
+$$\Theta = \{ (\mu, \sigma^2), -\infty < \mu < \infty, \sigma^2 > 0 \}$$
+
+* Vimos que o EMV de $(\mu, \sigma^2)$ em $\Theta$ é dado por $\hat{\mu} = \overline{X}$ e $\hat{\sigma}^2 = \sum(X_i - \overline{X})^2/n$.
+
+* Enquanto que em $\Theta_0$ é dado por $\hat{\mu}_0 = \overline{X}$ e $\hat{\sigma}_0^2 = \sigma_0^2$. 
+
+
+* Logo, a estatística do TRVG é dada por
+
+$$\lambda(\mathbf{x}) = \frac{(2\pi)^{-n/2}(\sigma_0^2)^{-n/2}e^{-\frac{1}{2\sigma_0^2}\sum(x_i- \overline{x})^2}}{(2\pi)^{-n/2}(\hat{\sigma}^2)^{-n/2}e^{-\frac{1}{2\sigma^2}\sum(x_i- \overline{x})^2}} = \left(\frac{\hat{\sigma}^2}{\sigma_0^2}\right)^{n/2}e^{-\frac{1}{2\sigma_0^2}\sum(x_i- \overline{x})^2+n/2}.$$
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+* Então, temos que o TRVG rejeita $H_0$ quando
+
+$$\left(\frac{\sum(x_i - \overline{x})^2}{\sigma_0^2}\right)^{n/2}e^{-\frac{\sum(x_i - \overline{x})^2}{2\sigma_0^2}} \leq c.$$
+
+
+
+* Notemos que se $g(y)=y^{n/2}e^{-y/2},~y>0$ então a função $\log g(y)$ (e também $g(y)$) é crescente para $y<n$, atingindo o ponto de máximo em $y=n$ e é decrescente para $y>n$.
+
+* Logo $g(y)\leq c$ se e somente se $y\leq c_{1}$ ou $y\geq c_{2}$ com $g(c_{1})=g(c_{2})$. 
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+* Portanto o TRVG é equivalente a rejeitar $H_{0}$ quando
+
+$$\frac{\sum(x_{i}-\overline{x})^{2}}{\sigma_{0}^{2}}\leq c_{1}\quad\text{ou}\quad\frac{\sum(x_{i}-\overline{x})^{2}}{\sigma_{0}^{2}}\geq c_{2}.$$
+
+Sob a hipótese $H_{0}$, $\frac{\sum(X_{i}-\overline{X})^{2}}{\sigma_{0}^{2}}\sim\chi_{n-1}^{2}$ e, então, dado $\alpha=0,05$ e $n=9$ obtemos, usando a tabela da distribuição qui-quadrado com 8 graus de liberdade, $c_{1}=2,180$ e $c_{2}=17,534$ se considerarmos, como na Seção 5.2, probabilidades iguais para as duas caudas.
+
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+* Como mencionado anteriormente, a forma e a distribuição de $\lambda(\mathbf{X})$ po dem ser complicadas e nem sempre podemos encontrar uma função $h$ com distribuição conhecida. 
+
+
+* O Teorema a seguir fornece a distribuição assintótica da estatística do TRVG, resolvendo esse problema pelo menos para o caso de amostras grandes. 
+ 
+
+:::{#thm-thm2} 
+Sejam $X_{1},\ldots,X_{n}$ uma amostra aleatória da variável aleatória $X$ com f.d.p. $f(x|\theta)$. Sob as condições de regularidade, se $\theta\in\Theta_{0}$, então a distribuição da estatística $-2\log\lambda(\mathbf{X})$ converge para a distribuição qui-quadrado quando o tamanho da amostra $n$ tende ao infinito. O número de graus de liberdade da distribuição limite é a diferença entre o número de parâmetros não especificados em $\Theta$ e o número de parâmetros não especificados em $\Theta_{0}$.
+:::
+
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+:::{#exm-exm10}  
+Sejam $X_{1},\ldots,X_{n}$ uma amostra aleatória da variável aleatória $X\sim Poisson(\theta)$. 
+
+* O interesse é testar $H_{0}:\theta=5$ versus $H_{1}:\theta\neq 5$. Pelo 
+
+* O EMV de $\theta$ é dado por $\hat{\theta}=\overline{X}$. Como a hipótese $H_{0}$ só especifica um único valor para $\theta$, o numerador de $\lambda(\mathbf{x})$ é $L(5,\mathbf{x})$ de modo que
+:::
+
+$$\lambda(\mathbf{x})=\frac{e^{-5n}5^{\sum x_{i}}}{\prod x_{i}!}\frac{\prod x_{i}!}{e^{-n\overline{x}}\overline{x}^{\sum x_{i}}}=e^{-n(5-\overline{x})}(5/\overline{x})^{\sum x_{i}}$$
+
+## Testes da Razão de Verossimilhanças Generalizadas (TRVG)
+<hr>
+
+
+* Pelo @thm-thm2 temos que
+
+$$-2\log\lambda(\mathbf{x})=-2\left\{-n(5-\overline{x})+\sum x_{i}\log(5/\overline{x})\right\}.$$
+
+* Portanto a região crítica do TRVG é dada por
+
+$$RC=\{-2[-n(5-\overline{x})+\sum x_{i}\log(5/\overline{x})]\geq c\}$$
+
+onde um valor aproximado para $c$ é obtido de modo que $P(\chi_{1}^{2}\geq c)=0,05$, que requer a utilização da tabela da distribuição qui-quadrado.
+
