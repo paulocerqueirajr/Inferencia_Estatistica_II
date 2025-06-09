@@ -1,0 +1,544 @@
+---
+format:
+  revealjs:
+    theme: ["theme/q-theme.scss"]
+    slide-number: c/t
+    #logo: "faest.png"
+    #footer: "[https://github.com/paulocerqueirajr](https://https://github.com/paulocerqueirajr)"
+    code-copy: true
+    center-title-slide: false
+    lang: pt
+    transition: fade
+    transition-speed: default
+highlight-style: a11y
+code-link: true
+height: 1080
+width: 1900
+execute: 
+  eval: true
+  echo: true
+---
+
+<h1> Inferência Estatística II </h1>
+
+<h2> Testes de hipótestes específicos </h2>
+
+<hr>
+
+<br>
+
+<h3> Prof. Paulo Cerqueira Jr - cerqueirajr@ufpa.br <br>
+Faculdade de Estatística - FAEST <br>
+Instituto de Ciências Exatas e Naturais - ICEN
+</h3>
+
+<h3>  </h3>
+<br>
+
+<h3> [https://github.com/paulocerqueirajr](https://https://github.com/paulocerqueirajr)
+
+![](github.jpg){.absolute top=550 left=845 height="90"}
+
+
+![](faest.png){.absolute top=5 left=1700 height="210"}
+
+<!-- ![](https://www.faest.icen.ufpa.br/images/110.png){.absolute top=5 left=1400 height="200"} -->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# [Introdução]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+
+## Introdução
+
+
+* Existem uma série de testes de hipóteses, cada um com sua finalidade.
+
+* Para uma amostra, temos alguns testes:
+
+   - Teste de normalidade
+   
+   - Teste-t comparação de grupos (indedependentes e pareados);
+   
+   - Testes não-paramétricos Wilcoxon;
+   
+   - Teste para média populacional com variância desconhecida (Teste t de Student).
+
+
+# [Testes para duas amostra]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+## Testes para duas amostra
+<hr>
+<br/>
+
+* Existem uma série de testes de hipóteses, cada um com sua finalidade.
+
+* Para duas amostra, temos alguns testes:
+
+    - Teste para a comparação de médias com variância conhecida (Teste $Z$);
+    - Teste para a comparação de médias com variância desconhecida (Teste t de **Student** comparação de grupos);
+    - Teste para a comparação de variâncias;
+    - Teste para comparação de amostras dependentes (Teste t de **Student** comparação de grupos pareado)
+
+
+## Teste para Comparação das médias
+<hr>
+<br/>
+
+* Queremos comparar:
+
+$$
+\begin{array}{ccl}
+&\times&(i) H_{1}:\mu_{1}\neq\mu_{2}. \text{(bilateral)}\\
+H_{0}: \mu_{1}=\mu_{2}&\times&(ii) H_{1}:\mu_{1}>\mu_{2}. \text{(Unilateral à direita)}\\
+&\times&(iii) H_{1}:\mu_{1}<\mu_{2}. \text{(Unilateral à esquerda)}
+\end{array}
+$$
+
+**CASO 1:** Mesma variância, conhecida. $(\sigma^{2}_{1}=\sigma^{2}_{2}=\sigma^{2}).$
+
+* Estatística para o teste:
+
+$$Z=\frac{\overline{X}-\overline{Y}-(\mu_{1}-\mu_{2})}{\sigma\sqrt{\frac{1}{n}+ \frac{1}{m}}}\sim N(0,1).$$
+
+
+## Exemplo
+<hr>
+
+**Exemplo:** Vamos supor que os níveis de QI entre meninos e meninas da décima série sejam normalmente distribuídos, cada um com desvio padrão populacional de 25. Uma professora quer saber se a média do QI entre meninos e meninas da turma é diferente, então ela seleciona duas amostras aleatórias — uma de meninos e outra de meninas — cada uma com tamanho 40, e registra os níveis de QI. Vamos realizar o teste Z para duas amostras para determinar se a média dos níveis de QI é diferente entre meninos e meninas, com nível de significância de 5\%. 
+
+Os dados:
+
+```{r, echo=TRUE}
+# Definindo os dados:
+qi_meninos = c( 79,118,99,117,98,102,112,111,102,73,114,97,114,122,
+                  90,115,84,105,84,126,83,96,111,151,147,103,104,118,
+                  132,108,95,118,121,88,94,92,94,109,105,123)
+qi_meninas = c( 99,128,89,107,99,104,119,112,105,93,84,91,113,129,
+                   100,105,94,115,114,106,113,116,116,131,117,123,134,
+                   128,112,101,105,89,101,118,124,72,104,119,145,133)
+dados <- data.frame(grupo = rep(c("Meninas", "Meninos")),
+                qi = c(qi_meninos, qi_meninas))
+head(dados)
+```
+
+
+
+## Exemplo
+<hr>
+
+**Passo 1:** $H_{0}:\mu_{A}=\mu_{B}$ contra $H_{1}:\mu_{A}\neq\mu_{B}$
+
+**Passo 2:**
+
+$$Z=\frac{\overline{X}_{A}-\overline{X}_{B}-(\mu_{A}-\mu_{B})}{\sigma\sqrt{ \frac{1}{n}+\frac{1}{m}}}\sim N(0,1)$$
+
+**Passo 3:** Sob $H_{0}$, temos $Z=\frac{\overline{X}_{A}-\overline{X}_{B}}{\sqrt{50}\sqrt{\frac{1}{n}+\frac{1}{ m}}}\sim N(0,1)$, 
+
+
+$$RC=\left\{Z\in\mathbb{R}:|Z|<z_{c}\right\}$$
+
+Logo,
+
+
+$$0,025=P(Z<z_{1}|Z\sim N(0,1))\quad\text{e}\quad 0,025=P(Z>z_{2}|Z\sim N(0,1)).$$
+Assim, temos $z_{1}=-1,96$ e $z_{2}=1,96$. E a regra de decisão é dada por
+
+$$\text{Rejeitar}\ \ H_{0}\ \ \text{se}\ \ |Z|< 1,96.$$
+
+## Exemplo
+<hr>
+
+**Passo 4:** O valor observado da estatística é
+
+$$z_{0}=\frac{106.350-110.175}{\sqrt{50}\sqrt{\frac{1}{40}+\frac{1}{40}}}=`{r} (106.350-110.175)/(sqrt(50)*(sqrt(1/40)+sqrt(1/40)))`$$
+
+**Passo 5:** Como o valor observado de $Z$ pertence a RC, rejeitamos $H_{0}$, e concluímos que há evidências de que a média dos níveis de QI é a mesma entre meninos e meninas.
+
+. . . 
+
+
+:::{.callout-note} 
+## Importante
+
+* Poderíamos construir um I.C. para a diferença $\theta=\mu_{A}-\mu_{B}$!!!
+* Em que:
+
+$$
+\text{IC}(\theta,\gamma) = \left( \overline{X}_A - \overline{X}_B \pm z_{\alpha/2} \sigma \sqrt{\frac{1}{n} + \frac{1}{m}} \right)
+$$
+:::
+
+
+
+## Exemplo
+<hr>
+
+```{r, echo =TRUE}
+library(BSDA)
+z.test(x=qi_meninos, y=qi_meninas, mu=0, sigma.x=25, sigma.y=25, alternative = "two.sided")
+```
+
+
+
+## Teste para Comparação das médias
+<hr>
+<br/>
+
+**CASO 2:** Mesma variância, desconhecida.
+
+* Neste caso, a estatística para o teste:
+
+$$T=\frac{\overline{X}_{A}-\overline{X}_{B}-(\mu_{A}-\mu_{B})}{S_{p}\sqrt{\frac{1 }{n}+\frac{1}{m}}}\sim t_{n+m-2},$$
+
+onde
+
+$$S_{p}^{2}=\frac{(n-1)S_{A}^{2}+(m-1)S_{B}^{2}}{n+m-2}.$$
+
+* Este teste é conhecido como `teste t para duas amostras!`
+
+
+
+
+## Teste para Comparação das médias
+<hr>
+<br/>
+
+**CASO 3:** Variâncias desiguais e desconhecidas.
+
+* Pode-se provar que a estatística
+
+$$
+T = \frac{\overline{X}_A - \overline{X}_B - (\mu_A - \mu_B)}{\sqrt{\frac{S_A^2}{n} + \frac{S_B^2}{m}}},
+$$
+
+sob $H_0$, tem uma distribuição aproximadamente t-Student com graus de liberdade, dados aproximadamente por
+
+$$
+v = \frac{(x + y)^2}{\frac{x^2}{n - 1} + \frac{y^2}{m - 1}},
+$$
+
+com $x = \frac{S_A^2}{n}$ e $y = \frac{S_B^2}{m}$.
+
+* Este teste é conhecido como `Problema de Behrens-Fisher!`.
+
+
+## Exemplo
+<hr>
+
+
+:::columns
+::::column
+
+* Os dados:
+
+```{r, echo=TRUE}
+# Peso de homens e mulheres
+peso.m <- c(38.9, 61.2, 73.3, 21.8, 63.4, 
+            64.6, 48.4, 48.8, 48.5)
+peso.h <- c(67.8, 60, 63.4, 76, 89.4, 
+            73.3, 67.3, 61.3, 62.4) 
+# Creando um data frame
+dados <- data.frame( 
+                grupo = rep(c("Mulheres", 
+                              "Homens"), each = 9),
+                peso = c(peso.m,  peso.h)
+                )
+head(dados)
+```
+::::
+::::column
+
+* Medidas de resumo:
+
+```{r, echo=TRUE}
+library(dplyr)
+group_by(dados, grupo) %>%
+  summarise(
+    freq = n(),
+    media = mean(peso, na.rm = TRUE),
+    vari = var(peso, na.rm = TRUE)
+  )
+```
+::::
+:::
+
+## Exemplo
+<hr>
+
+
+```{r, echo=TRUE, fig.height=8, fig.align='center'}
+library("ggpubr")
+ggboxplot(dados, x = "grupo", y = "peso", 
+          color = "grupo", palette = c("#00AFBB", "#E7B800"),
+        ylab = "Peso", xlab = "Grupos")
+```
+
+
+## Exemplo
+<hr>
+
+
+> A construção formal do teste.
+
+**Passo 1:** $H_0 : \mu_A = \mu_B$ contra $H_1 : \mu_A \neq \mu_B$
+
+**Passo 2:**
+
+$$T=\frac{\overline{X}_{A}-\overline{X}_{B}-(\mu_{A}-\mu_{B})}{\sqrt{\frac{S_{A }^{2}}{n}+\frac{S_{B}^{2}}{m}}}$$
+
+
+## Exemplo
+<hr>
+
+**Passo 3:** Sob $H_{0}$, temos $T=\frac{\overline{X}_{A}-\overline{X}_{B}}{\sqrt{\frac{S_{A}^{2}}{n}+\frac{S_{B}^ {2}}{m}}}\sim t_{v}$
+
+$$RC=\{T\in\mathbb{R}:T<t_{1}\text{ ou }T>t_{2}\},$$
+
+com
+
+$$0,025=P(T<t_{1}|T\sim t_{v})\quad\text{e}\quad 0,025=P(T>t_{2}|T\sim t_{v}).$$
+
+Agora,
+
+$$v=\frac{((87.9/9)+(243/9))^{2}}{(87.9/9)^{2}/8+(243/9)^{2}/8}= `r (((87.9/9)+(243/9))^2)/(((87.9/9)^2 /8)+((243/9)^2 /8))` \simeq 14$$
+
+Portanto,
+
+$$t_{1}=`r qt(0.025,df=14)`\quad\text{e}\quad t_{2}=`r qt(0.975,df=14)`.$$
+
+E a regra de decisão é dada por: Rejeitar $H_{0}$ se $T<`r qt(0.025,df=14)`$ ou $T>`r qt(0.975,df=14)`$.
+
+
+## Exemplo
+<hr>
+<br/>
+
+**Passo 4:** O valor observado da estatística é
+
+$$t_{0}=\frac{69.0-52.1}{\sqrt{\frac{87.9}{9}+\frac{243}{9}}}= `r (69.0-52.1)/sqrt((87.9/9)+(243/9))`.$$
+
+**Passo 5:** Como o valor observado de $T$ pertence a RC, rejeitamos $H_{0}$, e concluímos que há evidências de que os dois tipos de vigas têm resistências médias diferentes.
+
+
+
+## Exemplo
+<hr>
+
+```{r, echo =TRUE}
+res <- t.test(peso ~ grupo, data = dados, var.equal = FALSE)
+res
+```
+
+
+# Teste para Comparação das Variâncias
+## Teste para Comparação das Variâncias
+<hr>
+<br/>
+
+$$H_{0}:\sigma^{2}_{1}=\sigma^{2}_{2}$$
+
+A estatística do teste será
+
+$$F=\frac{S^{2}_{1}/\sigma^{2}_{1}}{S^{2}_{2}/\sigma^{2}_{2}}\sim F_{n-1,m-1}$$
+
+. . . 
+
+**Exemplo:** Queremos verificar se duas máquinas produzem peças com a mesma homogeneidade quanto à resistência à tensão. Para isso, sorteamos duas amostras de seis peças de cada máquina, e obtivemos as seguintes resistências:
+
+* Máquina A: 145, 127, 136, 142, 141, 137
+
+* Máquina B: 143, 128, 132, 138, 142, 132
+
+
+## Exemplo
+<hr>
+<br/>
+
+**Passo 1:** $H_{0}:\sigma^{2}_{A}=\sigma^{2}_{B}$ contra $H_{1}:\sigma^{2}_{A}\neq\sigma^{2}_{B}$
+
+**Passo 2:**
+
+$$F=\frac{S^{2}_{A}/\sigma^{2}_{A}}{S^{2}_{B}/\sigma^{2}_{B}}\sim F_{5,5}$$
+
+**Passo 3:** Sob $H_{0}$, temos que $F=\frac{S^{2}_{A}}{S^{2}_{B}}\sim F_{5,5}$
+
+Fixando $\alpha=0,05$, a RC é dada por
+
+$$RC=\{F<F_{1}\text{ ou }F>F_{2}\},$$
+
+com $F_{1}$ e $F_{2}$ tais que
+
+$$0,025=P(F<F_{1}|F\sim F_{5,5})\quad\text{e}\quad 0,025=P(F>F_{2}|F\sim F_{5,5})$$
+
+
+## Exemplo
+<hr>
+<br/>
+
+Temos então, $F_{2}=7,15$ e $F_{1}=1/7,15=0,14$. Assim, a regra de decisão é: 
+
+$$\text{Rejeitar}\ \ H_{0}\ \ \text{se}\ \  F<0,14\ \ \text{ou}\ \  F>7,15.$$
+
+**Passo 4:** Com os dados apresentados, temos $S^{2}_{A}=40$ e $S^{2}_{B}=37$. Portanto, o valor observado da estatística é $F_{o}=40/37=1,08$.
+
+**Passo 5:** Como o valor observado da estatística não pertence a RC, aceitamos $H_{0}$ e concluímos que as máquinas produzem com a mesma variabilidade.
+
+
+
+## Exemplo
+
+
+```{r, echo =TRUE}
+A <- c(145, 127, 136, 142, 141, 137)
+B <-  c(143, 128, 132, 138, 142, 132)
+dados <- data.frame( 
+                grupo = rep(c("A", 
+                              "B")),
+                res = c(A,  B)
+                )
+head(dados)
+```
+
+
+```{r, echo =TRUE}
+res.ftest <- var.test(res ~ grupo, data = dados)
+res.ftest
+```
+
+
+
+
+# Duas Populações Normais dependentes
+
+## Duas Populações Normais dependentes
+<hr>
+<br/>
+
+
+Aqui temos duas amostras $X_{1},X_{2},\cdots,X_{n}$ e $Y_{1},Y_{2},\cdots,Y_{n}$, só que agora as observações são pareadas, isto é, temos uma amostra de pares
+
+$$(X_{1},Y_{1}),(X_{2},Y_{2}),\cdots,(X_{n},Y_{n})$$
+
+Se definirmos a v.a. $D=X-Y$, teremos uma amostra $D_{1},D_{2},\cdots,D_{n}$, resultante da diferença dos valores entre cada par. Reduzimos o problema de duas populações a um problema de uma única população, já visto anteriormente. Assim,
+
+$$\overline{D}=\frac{1}{n}\sum_{i=1}^{n}D_{i}=\frac{1}{n}\sum_{i=1}^{n}(X_{i}-Y_{i })=\frac{1}{n}\sum_{i=1}^{n}X_{i}-\frac{1}{n}\sum_{i=1}^{n}Y_{i}=\overline{X}- \overline{Y}$$
+
+terá distribuição $N(\mu_{D},\sigma^{2}_{D}/n)$. 
+
+## Duas Populações Normais dependentes :
+<hr>
+<br/>
+
+Considerando
+
+$$S^{2}_{D}=\frac{1}{n-1}\sum_{i=1}^{n}(D_{i}-\overline{D})^{2},$$
+
+temos que
+
+$$T=\frac{\sqrt{n}(\overline{D}-\mu_{D})}{S_{D}}\sim t_{n-1}$$
+
+Como $\mu_{D}=E(D)=E(X-Y)=E(X)-E(Y)=\mu_{1}-\mu_{2}$, testar $H_{0}:\mu_{D}=0$ é equivalente a testar $H_{0}:\mu_{1}=\mu_{2}$.
+
+
+## Exemplo
+<hr>
+<br/>
+
+**Exemplo**: Cinco operadores de certo tipo de máquina são treinados em máquinas de duas marcas diferentes, A e B. Mediu-se o tempo em que cada um deles gasta na realização de uma mesma tarefa, e os resultados estão na tabela a seguir.
+
+| Operador | Marca A | Marca B |
+|:---:|:---:|:---:|
+| A | 80 | 75 |
+| B | 72 | 70 |
+| C | 65 | 60 |
+| D | 78 | 72 |
+| E | 85 | 78 |
+
+Ao nível de significância de $10\%$, poderíamos afirmar que a tarefa realizada na Máquina A demora mais que na Máquina B?
+
+## Exemplo
+<hr>
+
+
+**Passo 1:**
+
+$$H_{0}:\mu_{A}=\mu_{B}\times H_{1}:\mu_{A}>\mu_{B}$$
+
+Essas hipóteses são equivalentes a
+
+$$H_{0}:\mu_{D}=0 \times H_{1}:\mu_{D}>0$$
+
+**Passo 2:**
+
+$$T=\frac{\sqrt{n}(\overline{D}-\mu_{D})}{S_{D}}\sim t_{4}$$
+
+**Passo 3:** Como é o mesmo operador que realiza a tarefa nas duas máquinas, dizemos que as variáveis são emparelhadas. Sob $H_{0}$, temos $T=\frac{\sqrt{n}\overline{D}}{S_{D}}\sim t_{4}$. Assim, com $\alpha=0,10$, temos
+
+$$P(T>t_{c}|T\sim t_{4})=0,10.$$
+
+. . .
+
+Portanto, $t_{c}=1,533$, logo, a regra de decisão é: Rejeitar $H_{0}$ se $T>1,533$.
+
+## Exemplo
+<hr>
+
+
+**Passo 4:** Da Tabela de dados acima, obtemos os valores de $D$:
+
+$$d_{i}:\quad 5,2,5,6,7$$
+
+e, portanto,
+
+$$\overline{d}=5,\quad\text{e}\quad s_{D}^{2}=3,5$$
+
+Logo, o valor observado da estatística $\hat{e}$
+
+$$t_{o}=(\sqrt{5}\times 5)/\sqrt{3,5}=5,98$$
+
+**Passo 5:** Como o valor observado pertence a RC, rejeitamos $H_{0}$, ou seja, demora-se mais para realizar a tarefa na máquina A.
+
+. . .
+
+Podemos construir um I.C. para $\mu_{D}$, adotando $\gamma=0,90$ :
+
+$$IC(\mu_{D};90\%)=\bar{D}\pm t_{\alpha/2}\times\sqrt{s_{D}^{2}}/\sqrt{n}$$
+
+. . .
+
+$$IC(\mu_{D};90\%) = 5\pm 1,78=[3,22\; ;\;6,78]$$
+
+
+## Exemplo
+<hr>
+
+
+```{r, echo=TRUE}
+
+ma <- c(80, 72, 65, 78, 85)
+mb <- c(75, 70, 60, 72, 78)
+
+dados <- data.frame( 
+                grupo = rep(c("antes", "depois"), each=5),
+                tempo = c(ma, mb)
+                )
+head(dados)
+
+```
+
+```{r, echo=TRUE}
+
+
+group_by(dados, grupo) %>%
+  summarise(
+    freq = n(),
+    media = mean(tempo, na.rm = TRUE),
+    desvio = sd(tempo, na.rm = TRUE)
+  )
+
+```
