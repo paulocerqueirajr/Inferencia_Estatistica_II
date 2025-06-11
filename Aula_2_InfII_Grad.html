@@ -419,14 +419,14 @@ Prof.&nbsp;Paulo Cerqueira Jr - cerqueirajr@ufpa.br <br> Faculdade de Estatísti
 </section>
 <section id="introdução-1" class="slide level2">
 <h2>Introdução</h2>
+<p><br></p>
 <ul>
 <li><p>Existem uma série de testes de hipóteses, cada um com sua finalidade.</p></li>
 <li><p>Para uma amostra, temos alguns testes:</p>
 <ul>
 <li><p>Teste de normalidade</p></li>
 <li><p>Teste-t comparação de grupos (indedependentes e pareados);</p></li>
-<li><p>Testes não-paramétricos Wilcoxon;</p></li>
-<li><p>Teste para média populacional com variância desconhecida (Teste t de Student).</p></li>
+<li><p>Testes não-paramétricos Qui-quadrado;</p></li>
 </ul></li>
 </ul>
 </section></section>
@@ -440,7 +440,6 @@ Prof.&nbsp;Paulo Cerqueira Jr - cerqueirajr@ufpa.br <br> Faculdade de Estatísti
 <hr>
 <p><br></p>
 <ul>
-<li><p>Existem uma série de testes de hipóteses, cada um com sua finalidade.</p></li>
 <li><p>Para duas amostra, temos alguns testes:</p>
 <ul>
 <li>Teste para a comparação de médias com variância conhecida (Teste <span class="math inline">\(Z\)</span>);</li>
@@ -449,8 +448,13 @@ Prof.&nbsp;Paulo Cerqueira Jr - cerqueirajr@ufpa.br <br> Faculdade de Estatísti
 <li>Teste para comparação de amostras dependentes (Teste t de <strong>Student</strong> comparação de grupos pareado)</li>
 </ul></li>
 </ul>
+</section></section>
+<section>
+<section id="teste-para-comparação-das-médias" class="title-slide slide level1">
+<h1>Teste para Comparação das médias</h1>
+
 </section>
-<section id="teste-para-comparação-das-médias" class="slide level2">
+<section id="teste-para-comparação-das-médias-1" class="slide level2">
 <h2>Teste para Comparação das médias</h2>
 <hr>
 <p><br></p>
@@ -483,17 +487,17 @@ H_{0}: \mu_{1}=\mu_{2}&amp;\times&amp;(ii) H_{1}:\mu_{1}&gt;\mu_{2}. \text{(Unil
 <span id="cb1-5"><a href=""></a>qi_meninas <span class="ot">=</span> <span class="fu">c</span>( <span class="dv">99</span>,<span class="dv">128</span>,<span class="dv">89</span>,<span class="dv">107</span>,<span class="dv">99</span>,<span class="dv">104</span>,<span class="dv">119</span>,<span class="dv">112</span>,<span class="dv">105</span>,<span class="dv">93</span>,<span class="dv">84</span>,<span class="dv">91</span>,<span class="dv">113</span>,<span class="dv">129</span>,</span>
 <span id="cb1-6"><a href=""></a>                   <span class="dv">100</span>,<span class="dv">105</span>,<span class="dv">94</span>,<span class="dv">115</span>,<span class="dv">114</span>,<span class="dv">106</span>,<span class="dv">113</span>,<span class="dv">116</span>,<span class="dv">116</span>,<span class="dv">131</span>,<span class="dv">117</span>,<span class="dv">123</span>,<span class="dv">134</span>,</span>
 <span id="cb1-7"><a href=""></a>                   <span class="dv">128</span>,<span class="dv">112</span>,<span class="dv">101</span>,<span class="dv">105</span>,<span class="dv">89</span>,<span class="dv">101</span>,<span class="dv">118</span>,<span class="dv">124</span>,<span class="dv">72</span>,<span class="dv">104</span>,<span class="dv">119</span>,<span class="dv">145</span>,<span class="dv">133</span>)</span>
-<span id="cb1-8"><a href=""></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Meninas"</span>, <span class="st">"Meninos"</span>)),</span>
+<span id="cb1-8"><a href=""></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Meninas"</span>, <span class="st">"Meninos"</span>), <span class="at">each=</span><span class="dv">40</span>),</span>
 <span id="cb1-9"><a href=""></a>                <span class="at">qi =</span> <span class="fu">c</span>(qi_meninos, qi_meninas))</span>
 <span id="cb1-10"><a href=""></a><span class="fu">head</span>(dados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    grupo  qi
 1 Meninas  79
-2 Meninos 118
+2 Meninas 118
 3 Meninas  99
-4 Meninos 117
+4 Meninas 117
 5 Meninas  98
-6 Meninos 102</code></pre>
+6 Meninas 102</code></pre>
 </div>
 </div>
 </section>
@@ -513,7 +517,7 @@ H_{0}: \mu_{1}=\mu_{2}&amp;\times&amp;(ii) H_{1}:\mu_{1}&gt;\mu_{2}. \text{(Unil
 <h2>Exemplo</h2>
 <hr>
 <p><strong>Passo 4:</strong> O valor observado da estatística é</p>
-<p><span class="math display">\[z_{0}=\frac{106.350-110.175}{\sqrt{50}\sqrt{\frac{1}{40}+\frac{1}{40}}}=-1.710592\]</span></p>
+<p><span class="math display">\[z_{0}=\frac{106.350-110.175}{25\sqrt{\frac{1}{40}+\frac{1}{40}}}=-0.6842368\]</span></p>
 <p><strong>Passo 5:</strong> Como o valor observado de <span class="math inline">\(Z\)</span> pertence a RC, rejeitamos <span class="math inline">\(H_{0}\)</span>, e concluímos que há evidências de que a média dos níveis de QI é a mesma entre meninos e meninas.</p>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -558,7 +562,7 @@ mean of x mean of y
 </div>
 </div>
 </section>
-<section id="teste-para-comparação-das-médias-1" class="slide level2">
+<section id="teste-para-comparação-das-médias-2" class="slide level2">
 <h2>Teste para Comparação das médias</h2>
 <hr>
 <p><br></p>
@@ -573,7 +577,7 @@ mean of x mean of y
 <li>Este teste é conhecido como <code>teste t para duas amostras!</code></li>
 </ul>
 </section>
-<section id="teste-para-comparação-das-médias-2" class="slide level2">
+<section id="teste-para-comparação-das-médias-3" class="slide level2">
 <h2>Teste para Comparação das médias</h2>
 <hr>
 <p><br></p>
@@ -692,9 +696,11 @@ v = \frac{(x + y)^2}{\frac{x^2}{n - 1} + \frac{y^2}{m - 1}},
 <section id="exemplo-9" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
+<ul>
+<li>Caso 3:</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(peso <span class="sc">~</span> grupo, <span class="at">data =</span> dados, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-2"><a href=""></a>res</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>(res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(peso <span class="sc">~</span> grupo, <span class="at">data =</span> dados, <span class="at">var.equal =</span> <span class="cn">FALSE</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -709,6 +715,30 @@ sample estimates:
               68.98889               52.10000 </code></pre>
 </div>
 </div>
+</section>
+<section id="exemplo-10" class="slide level2">
+<h2>Exemplo</h2>
+<hr>
+<ul>
+<li>Caso 2:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>(res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(peso <span class="sc">~</span> grupo, <span class="at">data =</span> dados, <span class="at">var.equal =</span> <span class="cn">TRUE</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  peso by grupo
+t = 2.7842, df = 16, p-value = 0.01327
+alternative hypothesis: true difference in means between group Homens and group Mulheres is not equal to 0
+95 percent confidence interval:
+  4.029759 29.748019
+sample estimates:
+  mean in group Homens mean in group Mulheres 
+              68.98889               52.10000 </code></pre>
+</div>
+</div>
+<p><code>Obs:</code> Para realizar o teste t com variâncias iguais temos que usar o argumento <code>var.equal=TRUE</code>.</p>
 </section></section>
 <section>
 <section id="teste-para-comparação-das-variâncias" class="title-slide slide level1">
@@ -730,7 +760,7 @@ sample estimates:
 </ul>
 </div>
 </section>
-<section id="exemplo-10" class="slide level2">
+<section id="exemplo-11" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
 <p><br></p>
@@ -743,7 +773,7 @@ sample estimates:
 <p>com <span class="math inline">\(F_{1}\)</span> e <span class="math inline">\(F_{2}\)</span> tais que</p>
 <p><span class="math display">\[0,025=P(F&lt;F_{1}|F\sim F_{5,5})\quad\text{e}\quad 0,025=P(F&gt;F_{2}|F\sim F_{5,5})\]</span></p>
 </section>
-<section id="exemplo-11" class="slide level2">
+<section id="exemplo-12" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
 <p><br></p>
@@ -752,42 +782,37 @@ sample estimates:
 <p><strong>Passo 4:</strong> Com os dados apresentados, temos <span class="math inline">\(S^{2}_{A}=40\)</span> e <span class="math inline">\(S^{2}_{B}=37\)</span>. Portanto, o valor observado da estatística é <span class="math inline">\(F_{o}=40/37=1,08\)</span>.</p>
 <p><strong>Passo 5:</strong> Como o valor observado da estatística não pertence a RC, aceitamos <span class="math inline">\(H_{0}\)</span> e concluímos que as máquinas produzem com a mesma variabilidade.</p>
 </section>
-<section id="exemplo-12" class="slide level2">
+<section id="exemplo-13" class="slide level2">
 <h2>Exemplo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">145</span>, <span class="dv">127</span>, <span class="dv">136</span>, <span class="dv">142</span>, <span class="dv">141</span>, <span class="dv">137</span>)</span>
-<span id="cb12-2"><a href=""></a>B <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">128</span>, <span class="dv">132</span>, <span class="dv">138</span>, <span class="dv">142</span>, <span class="dv">132</span>)</span>
-<span id="cb12-3"><a href=""></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( </span>
-<span id="cb12-4"><a href=""></a>                <span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, </span>
-<span id="cb12-5"><a href=""></a>                              <span class="st">"B"</span>)),</span>
-<span id="cb12-6"><a href=""></a>                <span class="at">res =</span> <span class="fu">c</span>(A,  B)</span>
-<span id="cb12-7"><a href=""></a>                )</span>
-<span id="cb12-8"><a href=""></a><span class="fu">head</span>(dados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">145</span>, <span class="dv">127</span>, <span class="dv">136</span>, <span class="dv">142</span>, <span class="dv">141</span>, <span class="dv">137</span>)</span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">143</span>, <span class="dv">128</span>, <span class="dv">132</span>, <span class="dv">138</span>, <span class="dv">142</span>, <span class="dv">132</span>)</span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="at">each=</span><span class="dv">6</span>), <span class="at">res =</span> <span class="fu">c</span>(A,  B))</span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  grupo res
 1     A 145
-2     B 127
+2     A 127
 3     A 136
-4     B 142
+4     A 142
 5     A 141
-6     B 137</code></pre>
+6     A 137</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>res.ftest <span class="ot">&lt;-</span> <span class="fu">var.test</span>(res <span class="sc">~</span> grupo, <span class="at">data =</span> dados)</span>
-<span id="cb14-2"><a href=""></a>res.ftest</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>(res.ftest <span class="ot">&lt;-</span> <span class="fu">var.test</span>(res <span class="sc">~</span> grupo, <span class="at">data =</span> dados))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     F test to compare two variances
 
 data:  res by grupo
-F = 0.6676, num df = 5, denom df = 5, p-value = 0.6683
+F = 1.0821, num df = 5, denom df = 5, p-value = 0.9331
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.09341832 4.77094592
+ 0.1514131 7.7327847
 sample estimates:
 ratio of variances 
-          0.667603 </code></pre>
+          1.082056 </code></pre>
 </div>
 </div>
 </section></section>
@@ -816,7 +841,7 @@ ratio of variances
 <p><span class="math display">\[T=\frac{\sqrt{n}(\overline{D}-\mu_{D})}{S_{D}}\sim t_{n-1}\]</span></p>
 <p>Como <span class="math inline">\(\mu_{D}=E(D)=E(X-Y)=E(X)-E(Y)=\mu_{1}-\mu_{2}\)</span>, testar <span class="math inline">\(H_{0}:\mu_{D}=0\)</span> é equivalente a testar <span class="math inline">\(H_{0}:\mu_{1}=\mu_{2}\)</span>.</p>
 </section>
-<section id="exemplo-13" class="slide level2">
+<section id="exemplo-14" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
 <p><br></p>
@@ -859,7 +884,7 @@ ratio of variances
 </table>
 <p>Ao nível de significância de <span class="math inline">\(10\%\)</span>, poderíamos afirmar que a tarefa realizada na Máquina A demora mais que na Máquina B?</p>
 </section>
-<section id="exemplo-14" class="slide level2">
+<section id="exemplo-15" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
 <p><strong>Passo 1:</strong></p>
@@ -874,7 +899,7 @@ ratio of variances
 <p>Portanto, <span class="math inline">\(t_{c}=1,533\)</span>, logo, a regra de decisão é: Rejeitar <span class="math inline">\(H_{0}\)</span> se <span class="math inline">\(T&gt;1,533\)</span>.</p>
 </div>
 </section>
-<section id="exemplo-15" class="slide level2">
+<section id="exemplo-16" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
 <p><strong>Passo 4:</strong> Da Tabela de dados acima, obtemos os valores de <span class="math inline">\(D\)</span>:</p>
@@ -892,18 +917,15 @@ ratio of variances
 <p><span class="math display">\[IC(\mu_{D};90\%) = 5\pm 1,78=[3,22\; ;\;6,78]\]</span></p>
 </div>
 </section>
-<section id="exemplo-16" class="slide level2">
+<section id="exemplo-17" class="slide level2">
 <h2>Exemplo</h2>
 <hr>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>ma <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">72</span>, <span class="dv">65</span>, <span class="dv">78</span>, <span class="dv">85</span>)</span>
-<span id="cb16-2"><a href=""></a>mb <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">70</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">78</span>)</span>
-<span id="cb16-3"><a href=""></a></span>
-<span id="cb16-4"><a href=""></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( </span>
-<span id="cb16-5"><a href=""></a>                <span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"antes"</span>, <span class="st">"depois"</span>), <span class="at">each=</span><span class="dv">5</span>),</span>
-<span id="cb16-6"><a href=""></a>                <span class="at">tempo =</span> <span class="fu">c</span>(ma, mb)</span>
-<span id="cb16-7"><a href=""></a>                )</span>
-<span id="cb16-8"><a href=""></a><span class="fu">head</span>(dados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>ma <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">72</span>, <span class="dv">65</span>, <span class="dv">78</span>, <span class="dv">85</span>)</span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a>mb <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">70</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">78</span>)</span>
+<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"antes"</span>, <span class="st">"depois"</span>), <span class="at">each=</span><span class="dv">5</span>), <span class="at">tempo =</span> <span class="fu">c</span>(ma, mb) )</span>
+<span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   grupo tempo
 1  antes    80
@@ -915,12 +937,12 @@ ratio of variances
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">group_by</span>(dados, grupo) <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href=""></a>  <span class="fu">summarise</span>(</span>
-<span id="cb18-3"><a href=""></a>    <span class="at">freq =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-4"><a href=""></a>    <span class="at">media =</span> <span class="fu">mean</span>(tempo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-5"><a href=""></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(tempo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-6"><a href=""></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(dados, grupo) <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="fu">n</span>(),</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(tempo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(tempo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   grupo   freq media desvio
@@ -929,9 +951,260 @@ ratio of variances
 2 depois     5    71   6.86</code></pre>
 </div>
 </div>
+</section>
+<section id="exemplo-18" class="slide level2">
+<h2>Exemplo</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggboxplot</span>(dados, <span class="at">x =</span> <span class="st">"grupo"</span>, <span class="at">y =</span> <span class="st">"tempo"</span>, </span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="st">"grupo"</span>, </span>
+<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>          <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>),</span>
+<span id="cb22-4"><a href="" aria-hidden="true" tabindex="-1"></a>          <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"antes"</span>, <span class="st">"depois"</span>),</span>
+<span id="cb22-5"><a href="" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">"Tempo"</span>, <span class="at">xlab =</span> <span class="st">"Grupos"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="Aula_2_InfII_Grad_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x=</span>mb, <span class="at">y=</span>ma, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  mb and ma
+t = -5.9761, df = 4, p-value = 0.00394
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -7.322941 -2.677059
+sample estimates:
+mean difference 
+             -5 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="testes-não-paramétricos" class="title-slide slide level1" data-background-color="#00008B">
+<h1><span style="float:right;text-align:right;">Testes Não-paramétricos</span></h1>
+
+</section>
+<section id="teste-de-aderência-de-kolmogorov-smirnov" class="slide level2">
+<h2>Teste de Aderência de Kolmogorov-Smirnov:</h2>
+<hr>
+<blockquote>
+<p>Objetivo: Testar se a amostra observada provém de um modelo de probabilidade especificado, com função de distribuição acumulada (f.d.a.) <span class="math inline">\(F_0(x)\)</span>.</p>
+</blockquote>
+<ul>
+<li><p><span class="math inline">\(X_1, \cdots, X_n\)</span>: a.a. da v.a. <span class="math inline">\(X\)</span>, cujo modelo de probabilidade é desconhecido.</p></li>
+<li><p>Seja <span class="math inline">\(f(x)\)</span> a f.d.p. (ou f.p.) da v.a. <span class="math inline">\(X\)</span> e <span class="math inline">\(F(x) = P(X \leq x)\)</span> a sua f.d.a. Queremos testar a seguinte hipótese:</p></li>
+</ul>
+<p><span class="math display">\[H_0 : F(x) = F_0(x), \quad \text{para todo} \, x\]</span></p>
+<ul>
+<li>Um possível estimador para <span class="math inline">\(F(x)\)</span> é a função de distribuição empírica (f.d.e.), definida por</li>
+</ul>
+<p><span class="math display">\[F_e(x) = \frac{N(x)}{n},\]</span></p>
+<p>onde <span class="math inline">\(N(x)\)</span> é o número de observações menores ou iguais a <span class="math inline">\(x\)</span>, e <span class="math inline">\(n\)</span> é o número total de observações.</p>
+<ul>
+<li>Se <span class="math inline">\(F_e(x)\)</span> for um bom estimador de <span class="math inline">\(F(x)\)</span>, então as duas curvas devem estar próximas.</li>
+</ul>
+</section>
+<section id="teste-de-aderência-de-kolmogorov-smirnov-1" class="slide level2">
+<h2>Teste de Aderência de Kolmogorov-Smirnov:</h2>
+<hr>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Passos de construção do teste:</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li><p>Ordenar os valores da amostra;</p></li>
+<li><p>Obter os valores de <span class="math inline">\(F(x_i)\)</span>, a f.d.a. especificada na hipótese <span class="math inline">\(H_0\)</span>, para cada observação <span class="math inline">\(x_i\)</span> da amostra;</p></li>
+<li><p>Obter os valores de <span class="math inline">\(F_e(x_i) = \frac{i}{n}\)</span>, a f.d.a. empírica para cada observação <span class="math inline">\(x_i\)</span> da amostra;</p></li>
+<li><p>Obter as diferenças <span class="math inline">\(|F(x_i) - F_e(x_i)|\)</span>;</p></li>
+<li><p>Obter o valor da diferença máxima, <span class="math inline">\(D_{obs} = \max |F(x_i) - F_e(x_i)|\)</span>;</p></li>
+<li><p>Obter na Tabela da distribuição de Kolmogorov-Smirnov o valor tabelado da variável <span class="math inline">\(D\)</span>, para um nível fixado (<span class="math inline">\(\alpha = 0,05\)</span> ou <span class="math inline">\(\alpha = 0,01\)</span>), <span class="math inline">\(D_{tabi}\)</span>;</p></li>
+<li><p>Rejeitar <span class="math inline">\(H_0\)</span> se <span class="math inline">\(D_{obs} &gt; D_{tab}\)</span>, caso contrário, aceitar <span class="math inline">\(H_0\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="determinação-do-valor-tabelado-para-o-teste-de-kolmogorov-smirnov" class="slide level2">
+<h2>Determinação do Valor Tabelado para o Teste de Kolmogorov-Smirnov</h2>
+<hr>
+<ul>
+<li>Para Amostras Pequenas (<span class="math inline">\(n \leq 50\)</span>) tem-se a seguinte tabela de Valores Críticos:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(n\)</span></th>
+<th><span class="math inline">\(D_{0.05}\)</span></th>
+<th><span class="math inline">\(D_{0.01}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+<td>0.565</td>
+<td>0.669</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>0.409</td>
+<td>0.490</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>0.294</td>
+<td>0.352</td>
+</tr>
+<tr class="even">
+<td>30</td>
+<td>0.242</td>
+<td>0.290</td>
+</tr>
+<tr class="odd">
+<td>50</td>
+<td>0.188</td>
+<td>0.226</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Fórmula Aproximada</li>
+</ul>
+<p><span class="math display">\[ D_{\alpha} \approx \frac{c(\alpha)}{\sqrt{n}} \]</span></p>
+<ul>
+<li><p>Onde:</p></li>
+<li><p><span class="math inline">\(c(0.05) = 1.36\)</span></p></li>
+<li><p><span class="math inline">\(c(0.01) = 1.63\)</span></p></li>
+</ul>
+</section>
+<section id="determinação-do-valor-tabelado-para-o-teste-de-kolmogorov-smirnov-1" class="slide level2">
+<h2>Determinação do Valor Tabelado para o Teste de Kolmogorov-Smirnov</h2>
+<hr>
+<ul>
+<li>Para Amostras Grandes (<span class="math inline">\(n &gt; 50\)</span>), temos a aproximação Assintótica:</li>
+</ul>
+<p><span class="math display">\[ D_{\alpha} = \frac{c(\alpha)}{\sqrt{n}} \]</span></p>
+<ul>
+<li><p>Valores de <span class="math inline">\(c(\alpha)\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(\alpha = 0.05 \Rightarrow \frac{1.36}{\sqrt{n}}\)</span></p></li>
+<li><p><span class="math inline">\(\alpha = 0.01 \Rightarrow \frac{1.63}{\sqrt{n}}\)</span></p></li>
+</ul></li>
+<li><p>A fórmula geral para qualquer tamanho de amostra:</p></li>
+</ul>
+<p><span class="math display">\[ D_{\alpha} = \sqrt{-\frac{\ln(\alpha/2)}{2n}} \]</span></p>
+</section>
+<section id="exemplo-19" class="slide level2">
+<h2>Exemplo</h2>
+<hr>
+<blockquote>
+<p>Objetivo: Verificar se uma amostra de dados segue uma distribuição normal padrão <span class="math inline">\(\mathcal{N}(0, 1)\)</span> utilizando o teste de aderência de Kolmogorov-Smirnov.</p>
+</blockquote>
+<ul>
+<li>Amostra de tamanho <span class="math inline">\(n = 5\)</span>:</li>
+</ul>
+<p><span class="math display">\[ X = \{ -0.5, 0.1, 0.3, 0.8, 1.2 \} \]</span></p>
+<ul>
+<li><p>Passo a Passo do Teste:</p>
+<ul>
+<li>Passo 1: Ordenar os dados <span class="math display">\[ X_{\text{ordenado}} = \{ -0.5, 0.1, 0.3, 0.8, 1.2 \} \]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="exemplo-20" class="slide level2">
+<h2>Exemplo</h2>
+<hr>
+<ul>
+<li>Passo 2: Calcular <span class="math inline">\(F(x_i)\)</span> (f.d.a. teórica sob <span class="math inline">\(H_0\)</span>) Assumindo <span class="math inline">\(H_0: F(x) = \Phi(x)\)</span> (distribuição normal padrão):</li>
+</ul>
+<p><span class="math display">\[
+\begin{align*}
+F(-0.5) &amp;= \Phi(-0.5) \approx 0.3085 \\
+F(0.1) &amp;= \Phi(0.1) \approx 0.5398 \\
+F(0.3) &amp;= \Phi(0.3) \approx 0.6179 \\
+F(0.8) &amp;= \Phi(0.8) \approx 0.7881 \\
+F(1.2) &amp;= \Phi(1.2) \approx 0.8849
+\end{align*}
+\]</span></p>
+<ul>
+<li>Passo 3: Calcular <span class="math inline">\(F_e(x_i)\)</span> (f.d.a. empírica)</li>
+</ul>
+<p><span class="math display">\[ F_e(x_i) = \frac{i}{n} =
+\begin{cases}
+F_e(-0.5) = \frac{1}{5} = 0.2 \\
+F_e(0.1) = \frac{2}{5} = 0.4 \\
+F_e(0.3) = \frac{3}{5} = 0.6 \\
+F_e(0.8) = \frac{4}{5} = 0.8 \\
+F_e(1.2) = \frac{5}{5} = 1.0
+\end{cases}
+\]</span></p>
+</section>
+<section id="exemplo-21" class="slide level2">
+<h2>Exemplo</h2>
+<hr>
+<ul>
+<li>Passo 4: Calcular as diferenças <span class="math inline">\(|F(x_i) - F_e(x_i)|\)</span></li>
+</ul>
+<p><span class="math display">\[
+\begin{align*}
+|F(-0.5) - F_e(-0.5)| &amp;= 0.1085 \\
+|F(0.1) - F_e(0.1)| &amp;= 0.1398 \\
+|F(0.3) - F_e(0.3)| &amp;= 0.0179 \\
+|F(0.8) - F_e(0.8)| &amp;= 0.0119 \\
+|F(1.2) - F_e(1.2)| &amp;= 0.1151
+\end{align*}
+\]</span></p>
+<ul>
+<li><p>Passo 5: Encontrar a diferença máxima <span class="math inline">\(D_{\text{obs}}\)</span> <span class="math display">\[ D_{\text{obs}} = \max \{ 0.1085, 0.1398, 0.0179, 0.0119, 0.1151 \} = 0.1398 \]</span></p></li>
+<li><p>Passo 6: Valor crítico <span class="math inline">\(D_{\text{tab}}\)</span> (<span class="math inline">\(\alpha = 0.05\)</span>) Para <span class="math inline">\(n = 5\)</span> e <span class="math inline">\(\alpha = 0.05\)</span>:<br>
+<span class="math display">\[ D_{\text{tab}} \approx 0.565 \]</span></p></li>
+</ul>
+</section>
+<section id="exemplo-22" class="slide level2">
+<h2>Exemplo</h2>
+<hr>
+<ul>
+<li><p>Passo 7: Decisão Como <span class="math inline">\(D_{\text{obs}} = 0.1398 &lt; D_{\text{tab}} = 0.565\)</span>, <strong>não rejeitamos <span class="math inline">\(H_0\)</span></strong>.</p></li>
+<li><p><strong>Conclusão:</strong> <code>Não há evidências estatísticas</code> para afirmar que a amostra não segue a distribuição normal padrão <span class="math inline">\(N(0, 1)\)</span>.</p></li>
+</ul>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Observações Adicionais:</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li><strong>Amostras maiores</strong>: Para <span class="math inline">\(n &gt; 50\)</span>, utilize aproximações assintóticas (ex: <span class="math inline">\(D_{\text{tab}} \approx \frac{1.36}{\sqrt{n}}\)</span> para <span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li><strong>Outras distribuições</strong>: O teste pode ser adaptado para qualquer distribuição contínua (exponencial, uniforme, etc.).</li>
+<li>O teste é mais conservativo para amostras pequenas.</li>
+<li><span class="math inline">\(F_0(x)\)</span> deve ser completamente especificada.</li>
+</ol>
+</div>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </div>
 </section></section>

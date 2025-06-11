@@ -54,7 +54,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 ## Introdução
-
+<br/>
 
 * Existem uma série de testes de hipóteses, cada um com sua finalidade.
 
@@ -64,18 +64,17 @@ knitr::opts_chunk$set(echo = FALSE)
    
    - Teste-t comparação de grupos (indedependentes e pareados);
    
-   - Testes não-paramétricos Wilcoxon;
+   - Testes não-paramétricos Qui-quadrado;
    
-   - Teste para média populacional com variância desconhecida (Teste t de Student).
+
 
 
 # [Testes para duas amostra]{style="float:right;text-align:right;"} {background-color="#00008B"}
 
+
 ## Testes para duas amostra
 <hr>
 <br/>
-
-* Existem uma série de testes de hipóteses, cada um com sua finalidade.
 
 * Para duas amostra, temos alguns testes:
 
@@ -84,6 +83,8 @@ knitr::opts_chunk$set(echo = FALSE)
     - Teste para a comparação de variâncias;
     - Teste para comparação de amostras dependentes (Teste t de **Student** comparação de grupos pareado)
 
+
+# Teste para Comparação das médias
 
 ## Teste para Comparação das médias
 <hr>
@@ -121,11 +122,10 @@ qi_meninos = c( 79,118,99,117,98,102,112,111,102,73,114,97,114,122,
 qi_meninas = c( 99,128,89,107,99,104,119,112,105,93,84,91,113,129,
                    100,105,94,115,114,106,113,116,116,131,117,123,134,
                    128,112,101,105,89,101,118,124,72,104,119,145,133)
-dados <- data.frame(grupo = rep(c("Meninas", "Meninos")),
+dados <- data.frame(grupo = rep(c("Meninas", "Meninos"), each=40),
                 qi = c(qi_meninos, qi_meninas))
 head(dados)
 ```
-
 
 
 ## Exemplo
@@ -155,7 +155,7 @@ $$\text{Rejeitar}\ \ H_{0}\ \ \text{se}\ \ |Z|< 1,96.$$
 
 **Passo 4:** O valor observado da estatística é
 
-$$z_{0}=\frac{106.350-110.175}{\sqrt{50}\sqrt{\frac{1}{40}+\frac{1}{40}}}=`{r} (106.350-110.175)/(sqrt(50)*(sqrt(1/40)+sqrt(1/40)))`$$
+$$z_{0}=\frac{106.350-110.175}{25\sqrt{\frac{1}{40}+\frac{1}{40}}}=`{r}  (106.350-110.175)/(25*sqrt((1/40)+(1/40)))`$$
 
 **Passo 5:** Como o valor observado de $Z$ pertence a RC, rejeitamos $H_{0}$, e concluímos que há evidências de que a média dos níveis de QI é a mesma entre meninos e meninas.
 
@@ -329,11 +329,26 @@ $$t_{0}=\frac{69.0-52.1}{\sqrt{\frac{87.9}{9}+\frac{243}{9}}}= `r (69.0-52.1)/sq
 ## Exemplo
 <hr>
 
+* Caso 3:
+
 ```{r, echo =TRUE}
-res <- t.test(peso ~ grupo, data = dados, var.equal = FALSE)
-res
+#| code-line-numbers: false
+
+(res <- t.test(peso ~ grupo, data = dados, var.equal = FALSE))
 ```
 
+## Exemplo
+<hr>
+
+* Caso 2:
+
+```{r, echo =TRUE}
+#| code-line-numbers: false
+
+(res <- t.test(peso ~ grupo, data = dados, var.equal = TRUE))
+```
+
+`Obs:` Para realizar o teste t com variâncias iguais temos que usar o argumento `var.equal=TRUE`.
 
 # Teste para Comparação das Variâncias
 ## Teste para Comparação das Variâncias
@@ -394,23 +409,21 @@ $$\text{Rejeitar}\ \ H_{0}\ \ \text{se}\ \  F<0,14\ \ \text{ou}\ \  F>7,15.$$
 
 
 ```{r, echo =TRUE}
+#| code-line-numbers: false
+
 A <- c(145, 127, 136, 142, 141, 137)
 B <-  c(143, 128, 132, 138, 142, 132)
-dados <- data.frame( 
-                grupo = rep(c("A", 
-                              "B")),
-                res = c(A,  B)
-                )
+dados <- data.frame(grupo = rep(c("A", "B"), each=6), res = c(A,  B))
 head(dados)
+
 ```
 
 
 ```{r, echo =TRUE}
-res.ftest <- var.test(res ~ grupo, data = dados)
-res.ftest
+#| code-line-numbers: false
+
+(res.ftest <- var.test(res ~ grupo, data = dados))
 ```
-
-
 
 
 # Duas Populações Normais dependentes
@@ -519,20 +532,18 @@ $$IC(\mu_{D};90\%) = 5\pm 1,78=[3,22\; ;\;6,78]$$
 
 
 ```{r, echo=TRUE}
+#| code-line-numbers: false
 
 ma <- c(80, 72, 65, 78, 85)
 mb <- c(75, 70, 60, 72, 78)
 
-dados <- data.frame( 
-                grupo = rep(c("antes", "depois"), each=5),
-                tempo = c(ma, mb)
-                )
+dados <- data.frame(grupo = rep(c("antes", "depois"), each=5), tempo = c(ma, mb) )
 head(dados)
 
 ```
 
 ```{r, echo=TRUE}
-
+#| code-line-numbers: false
 
 group_by(dados, grupo) %>%
   summarise(
@@ -542,3 +553,212 @@ group_by(dados, grupo) %>%
   )
 
 ```
+
+
+
+## Exemplo 
+
+:::columns
+::::column
+```{r, echo=TRUE}
+#| code-line-numbers: false
+#| fig-height: 8
+
+ggboxplot(dados, x = "grupo", y = "tempo", 
+          color = "grupo", 
+          palette = c("#00AFBB", "#E7B800"),
+          order = c("antes", "depois"),
+          ylab = "Tempo", xlab = "Grupos")
+
+```
+
+::::
+:::: column
+
+
+```{r, echo=TRUE}
+#| code-line-numbers: false
+
+t.test(x=mb, y=ma, paired = TRUE)
+
+```
+
+::::
+:::
+
+
+# [Testes Não-paramétricos]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+
+## Teste de Aderência de Kolmogorov-Smirnov:
+<hr>
+
+> Objetivo: Testar se a amostra observada provém de um modelo de probabilidade especificado, com função de distribuição acumulada (f.d.a.) $F_0(x)$.
+
+* $X_1, \cdots, X_n$: a.a. da v.a. $X$, cujo modelo de probabilidade é desconhecido.
+
+* Seja $f(x)$ a f.d.p. (ou f.p.) da v.a. $X$ e $F(x) = P(X \leq x)$ a sua f.d.a. Queremos testar a seguinte hipótese:
+
+$$H_0 : F(x) = F_0(x), \quad \text{para todo} \, x$$
+
+* Um possível estimador para $F(x)$ é a função de distribuição empírica (f.d.e.), definida por
+
+$$F_e(x) = \frac{N(x)}{n},$$
+
+onde $N(x)$ é o número de observações menores ou iguais a $x$, e $n$ é o número total de observações.  
+
+
+* Se $F_e(x)$ for um bom estimador de $F(x)$, então as duas curvas devem estar próximas.
+
+## Teste de Aderência de Kolmogorov-Smirnov:
+<hr>
+
+:::{.callout-note}
+# Passos de construção do teste:
+
+1. Ordenar os valores da amostra;
+
+2. Obter os valores de $F(x_i)$, a f.d.a. especificada na hipótese $H_0$, para cada observação $x_i$ da amostra;
+
+3. Obter os valores de $F_e(x_i) = \frac{i}{n}$, a f.d.a. empírica para cada observação $x_i$ da amostra;
+
+4. Obter as diferenças $|F(x_i) - F_e(x_i)|$;
+
+5. Obter o valor da diferença máxima, $D_{obs} = \max |F(x_i) - F_e(x_i)|$;
+
+6. Obter na Tabela da distribuição de Kolmogorov-Smirnov o valor tabelado da variável $D$, para um nível fixado ($\alpha = 0,05$ ou $\alpha = 0,01$), $D_{tabi}$;
+
+7. Rejeitar $H_0$ se $D_{obs} > D_{tab}$, caso contrário, aceitar $H_0$.
+:::
+
+
+
+
+## Determinação do Valor Tabelado para o Teste de Kolmogorov-Smirnov
+<hr>
+
+* Para Amostras Pequenas ($n \leq 50$) tem-se a seguinte tabela de Valores Críticos:
+
+| $n$ | $D_{0.05}$ | $D_{0.01}$ |
+|-----|------------|------------|
+| 5   | 0.565      | 0.669      |
+| 10  | 0.409      | 0.490      |
+| 20  | 0.294      | 0.352      |
+| 30  | 0.242      | 0.290      |
+| 50  | 0.188      | 0.226      |
+
+* Fórmula Aproximada
+
+$$ D_{\alpha} \approx \frac{c(\alpha)}{\sqrt{n}} $$
+
+* Onde:
+
+- $c(0.05) = 1.36$
+- $c(0.01) = 1.63$
+
+## Determinação do Valor Tabelado para o Teste de Kolmogorov-Smirnov
+<hr>
+
+* Para Amostras Grandes ($n > 50$), temos a aproximação Assintótica:
+
+$$ D_{\alpha} = \frac{c(\alpha)}{\sqrt{n}} $$
+
+* Valores de $c(\alpha)$:
+
+   - $\alpha = 0.05 \Rightarrow \frac{1.36}{\sqrt{n}}$
+   
+   - $\alpha = 0.01 \Rightarrow \frac{1.63}{\sqrt{n}}$
+
+* A fórmula geral para qualquer tamanho de amostra:
+
+$$ D_{\alpha} = \sqrt{-\frac{\ln(\alpha/2)}{2n}} $$
+
+
+## Exemplo
+<hr>
+
+> Objetivo: Verificar se uma amostra de dados segue uma distribuição normal padrão $\mathcal{N}(0, 1)$ utilizando o teste de aderência de Kolmogorov-Smirnov.
+
+* Amostra de tamanho $n = 5$:  
+
+$$ X = \{ -0.5, 0.1, 0.3, 0.8, 1.2 \} $$
+
+* Passo a Passo do Teste:
+
+   - Passo 1: Ordenar os dados
+$$ X_{\text{ordenado}} = \{ -0.5, 0.1, 0.3, 0.8, 1.2 \} $$
+
+
+
+## Exemplo
+<hr>
+
+   - Passo 2: Calcular $F(x_i)$ (f.d.a. teórica sob $H_0$)
+Assumindo $H_0: F(x) = \Phi(x)$ (distribuição normal padrão):
+
+$$
+\begin{align*}
+F(-0.5) &= \Phi(-0.5) \approx 0.3085 \\
+F(0.1) &= \Phi(0.1) \approx 0.5398 \\
+F(0.3) &= \Phi(0.3) \approx 0.6179 \\
+F(0.8) &= \Phi(0.8) \approx 0.7881 \\
+F(1.2) &= \Phi(1.2) \approx 0.8849
+\end{align*}
+$$
+
+   - Passo 3: Calcular $F_e(x_i)$ (f.d.a. empírica)
+
+$$ F_e(x_i) = \frac{i}{n} =
+\begin{cases}
+F_e(-0.5) = \frac{1}{5} = 0.2 \\
+F_e(0.1) = \frac{2}{5} = 0.4 \\
+F_e(0.3) = \frac{3}{5} = 0.6 \\
+F_e(0.8) = \frac{4}{5} = 0.8 \\
+F_e(1.2) = \frac{5}{5} = 1.0
+\end{cases}
+$$
+
+
+## Exemplo
+<hr>
+
+   - Passo 4: Calcular as diferenças $|F(x_i) - F_e(x_i)|$
+
+$$
+\begin{align*}
+|F(-0.5) - F_e(-0.5)| &= 0.1085 \\
+|F(0.1) - F_e(0.1)| &= 0.1398 \\
+|F(0.3) - F_e(0.3)| &= 0.0179 \\
+|F(0.8) - F_e(0.8)| &= 0.0119 \\
+|F(1.2) - F_e(1.2)| &= 0.1151
+\end{align*}
+$$
+
+   - Passo 5: Encontrar a diferença máxima $D_{\text{obs}}$
+$$ D_{\text{obs}} = \max \{ 0.1085, 0.1398, 0.0179, 0.0119, 0.1151 \} = 0.1398 $$
+
+   - Passo 6: Valor crítico $D_{\text{tab}}$ ($\alpha = 0.05$)
+Para $n = 5$ e $\alpha = 0.05$:  
+$$ D_{\text{tab}} \approx 0.565 $$
+
+
+## Exemplo
+<hr>
+
+   - Passo 7: Decisão
+Como $D_{\text{obs}} = 0.1398 < D_{\text{tab}} = 0.565$, **não rejeitamos $H_0$**.
+
+   - **Conclusão:** `Não há evidências estatísticas` para afirmar que a amostra não segue a distribuição normal padrão $N(0, 1)$.
+
+
+. . . 
+
+:::{.callout-note}
+## Observações Adicionais:
+
+1. **Amostras maiores**: Para $n > 50$, utilize aproximações assintóticas (ex: $D_{\text{tab}} \approx \frac{1.36}{\sqrt{n}}$ para $\alpha = 0.05$).
+2. **Outras distribuições**: O teste pode ser adaptado para qualquer distribuição contínua (exponencial, uniforme, etc.).
+3. O teste é mais conservativo para amostras pequenas.
+4. $F_0(x)$ deve ser completamente especificada.
+:::
+
