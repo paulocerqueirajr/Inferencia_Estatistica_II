@@ -611,7 +611,7 @@ v = \frac{(x + y)^2}{\frac{x^2}{n - 1} + \frac{y^2}{m - 1}},
 <span id="cb5-3"><a href=""></a>            <span class="fl">64.6</span>, <span class="fl">48.4</span>, <span class="fl">48.8</span>, <span class="fl">48.5</span>)</span>
 <span id="cb5-4"><a href=""></a>peso.h <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">67.8</span>, <span class="dv">60</span>, <span class="fl">63.4</span>, <span class="dv">76</span>, <span class="fl">89.4</span>, </span>
 <span id="cb5-5"><a href=""></a>            <span class="fl">73.3</span>, <span class="fl">67.3</span>, <span class="fl">61.3</span>, <span class="fl">62.4</span>) </span>
-<span id="cb5-6"><a href=""></a><span class="co"># Creando um data frame</span></span>
+<span id="cb5-6"><a href=""></a><span class="co"># Criando um data frame</span></span>
 <span id="cb5-7"><a href=""></a>dados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( </span>
 <span id="cb5-8"><a href=""></a>                <span class="at">grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Mulheres"</span>, </span>
 <span id="cb5-9"><a href=""></a>                              <span class="st">"Homens"</span>), <span class="at">each =</span> <span class="dv">9</span>),</span>
@@ -691,7 +691,7 @@ v = \frac{(x + y)^2}{\frac{x^2}{n - 1} + \frac{y^2}{m - 1}},
 <p><br></p>
 <p><strong>Passo 4:</strong> O valor observado da estatística é</p>
 <p><span class="math display">\[t_{0}=\frac{69.0-52.1}{\sqrt{\frac{87.9}{9}+\frac{243}{9}}}= 2.7871451.\]</span></p>
-<p><strong>Passo 5:</strong> Como o valor observado de <span class="math inline">\(T\)</span> pertence a RC, rejeitamos <span class="math inline">\(H_{0}\)</span>, e concluímos que há evidências de que os dois tipos de vigas têm resistências médias diferentes.</p>
+<p><strong>Passo 5:</strong> Como o valor observado de <span class="math inline">\(T\)</span> pertence a RC, rejeitamos <span class="math inline">\(H_{0}\)</span>, e concluímos que há evidências de que homens e mulheres tem pesos diferentes.</p>
 </section>
 <section id="exemplo-9" class="slide level2">
 <h2>Exemplo</h2>
@@ -972,19 +972,20 @@ ratio of variances
 </div>
 </div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x=</span>mb, <span class="at">y=</span>ma, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x=</span>ma, <span class="at">y=</span>mb, <span class="at">alternative =</span> <span class="st">"greater"</span>, </span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
 
-data:  mb and ma
-t = -5.9761, df = 4, p-value = 0.00394
-alternative hypothesis: true mean difference is not equal to 0
+data:  ma and mb
+t = 5.9761, df = 4, p-value = 0.00197
+alternative hypothesis: true mean difference is greater than 0
 95 percent confidence interval:
- -7.322941 -2.677059
+ 3.216369      Inf
 sample estimates:
 mean difference 
-             -5 </code></pre>
+              5 </code></pre>
 </div>
 </div>
 </div>
@@ -1201,10 +1202,128 @@ F_e(1.2) = \frac{5}{5} = 1.0
 </div>
 </div>
 </div>
+</div>
+</section>
+<section id="exemplo-23" class="slide level2">
+<h2>Exemplo</h2>
+<hr>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="Aula_2_InfII_Grad_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact one-sample Kolmogorov-Smirnov test
+
+data:  x
+D = 0.33983, p-value = 0.5079
+alternative hypothesis: two-sided</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="testes-de-normalidade-mais-usuais" class="title-slide slide level1">
+<h1>Testes de Normalidade Mais Usuais</h1>
+
+</section>
+<section id="teste-de-shapiro-wilk" class="slide level2">
+<h2>Teste de Shapiro-Wilk</h2>
+<hr>
+<ul>
+<li><strong>Indicado para</strong>: Amostras pequenas a moderadas (n ≤ 50, mas pode ser usado até n ≈ 2000).</li>
+<li><strong>Hipótese nula (H₀)</strong>: Os dados seguem uma distribuição normal.</li>
+<li><strong>Características</strong>:
+<ul>
+<li>Muito sensível a desvios da normalidade.</li>
+<li><strong>Recomendado quando</strong> se precisa de maior poder estatístico em amostras pequenas.</li>
+</ul></li>
+<li><strong>Vantagem</strong>: Um dos mais poderosos para n pequeno.</li>
+<li><strong>Desvantagem</strong>: Perde eficiência com amostras grandes.</li>
+</ul>
+</section>
+<section id="kolmogorov-smirnov-k-s" class="slide level2">
+<h2>Kolmogorov-Smirnov (K-S)</h2>
+<hr>
+<ul>
+<li><strong>Indicado para</strong>: Amostras de qualquer tamanho, mas menos poderoso para detectar pequenas violações.</li>
+<li><strong>Hipótese nula (H₀)</strong>: A distribuição empírica dos dados é igual à normal.</li>
+<li><strong>Características</strong>:
+<ul>
+<li>Baseia-se na maior distância entre a função de distribuição empírica e a teórica.</li>
+<li>A versão com correção de <strong>Lilliefors</strong> é usada quando os parâmetros da normal são estimados da amostra.</li>
+</ul></li>
+<li><strong>Vantagem</strong>: Aplicável a várias distribuições.</li>
+<li><strong>Desvantagem</strong>: Menos sensível que Shapiro-Wilk.</li>
+</ul>
+</section>
+<section id="anderson-darling" class="slide level2">
+<h2>Anderson-Darling</h2>
+<hr>
+<ul>
+<li><strong>Indicado para</strong>: Amostras pequenas a grandes.</li>
+<li><strong>Hipótese nula (H₀)</strong>: Os dados seguem uma distribuição normal.</li>
+<li><strong>Características</strong>:
+<ul>
+<li>Dá <strong>mais peso às caudas</strong> da distribuição (útil se há suspeitas de problemas nas caudas).</li>
+</ul></li>
+<li><strong>Vantagem</strong>: Mais sensível a desvios nas extremidades (caudas).</li>
+<li><strong>Desvantagem</strong>: Nem sempre retorna um valor-p diretamente (depende do software).</li>
+</ul>
+</section>
+<section id="lilliefors" class="slide level2">
+<h2>Lilliefors</h2>
+<hr>
+<ul>
+<li><strong>Descrição</strong>: É uma adaptação do teste K-S, usada quando a média e desvio padrão são estimados da amostra.</li>
+<li><strong>Usado frequentemente em</strong>: Softwares como SPSS.</li>
+<li><strong>Similaridades</strong>: Mesmo princípio do K-S, mas com ajuste.</li>
+</ul>
+</section>
+<section id="jarque-bera" class="slide level2">
+<h2>Jarque-Bera</h2>
+<hr>
+<ul>
+<li><strong>Indicado para</strong>: Amostras grandes.</li>
+<li><strong>Hipótese nula (H₀)</strong>: Os dados têm <strong>assimetria (skewness)</strong> e <strong>curtose (kurtosis)</strong> compatíveis com a normal.</li>
+<li><strong>Características</strong>:
+<ul>
+<li>Usa estatísticas de <strong>assimetria e curtose</strong> para verificar desvio da normalidade.</li>
+</ul></li>
+<li><strong>Vantagem</strong>: Simples e computacionalmente leve.</li>
+<li><strong>Desvantagem</strong>: Fraco com amostras pequenas; ignora outros aspectos da forma da distribuição.</li>
+</ul>
+</section>
+<section id="exercícios" class="slide level2">
+<h2>Exercícios:</h2>
+<hr>
+<blockquote>
+<p>Baixe o banco de dados <code>dadosInf2_ex.xlsx</code> no repositório do github e responda as seguintes perguntas:</p>
+</blockquote>
+<ol type="1">
+<li><p>O peso médio antes do tratamento difere entre os participantes do grupo <strong>Controle</strong> e do grupo <strong>Tratamento</strong>?</p></li>
+<li><p>A média da pressão arterial <strong>antes do tratamento</strong> difere entre os <strong>homens</strong> e as <strong>mulheres</strong>?</p></li>
+<li><p>Existe diferença na altura média entre os participantes do grupo <strong>Controle</strong> e os do grupo <strong>Tratamento</strong>?</p></li>
+<li><p>Há diferença significativa na idade média entre <strong>homens</strong> e <strong>mulheres</strong>?</p></li>
+<li><p>O peso médio dos participantes mudou após o tratamento?</p></li>
+<li><p>O tratamento foi eficaz em reduzir a pressão arterial dos participantes?</p></li>
+</ol>
+<ul>
+<li>Coloque as respostas no formato relatório usando o <code>quarto</code>, por exemplo.</li>
+</ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
-</div>
 </div>
 </div>
 </section></section>

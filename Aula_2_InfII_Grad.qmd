@@ -242,7 +242,7 @@ peso.m <- c(38.9, 61.2, 73.3, 21.8, 63.4,
             64.6, 48.4, 48.8, 48.5)
 peso.h <- c(67.8, 60, 63.4, 76, 89.4, 
             73.3, 67.3, 61.3, 62.4) 
-# Creando um data frame
+# Criando um data frame
 dados <- data.frame( 
                 grupo = rep(c("Mulheres", 
                               "Homens"), each = 9),
@@ -322,7 +322,7 @@ E a regra de decisão é dada por: Rejeitar $H_{0}$ se $T<`r qt(0.025,df=14)`$ o
 
 $$t_{0}=\frac{69.0-52.1}{\sqrt{\frac{87.9}{9}+\frac{243}{9}}}= `r (69.0-52.1)/sqrt((87.9/9)+(243/9))`.$$
 
-**Passo 5:** Como o valor observado de $T$ pertence a RC, rejeitamos $H_{0}$, e concluímos que há evidências de que os dois tipos de vigas têm resistências médias diferentes.
+**Passo 5:** Como o valor observado de $T$ pertence a RC, rejeitamos $H_{0}$, e concluímos que há evidências de que homens e mulheres tem pesos diferentes.
 
 
 
@@ -579,7 +579,8 @@ ggboxplot(dados, x = "grupo", y = "tempo",
 ```{r, echo=TRUE}
 #| code-line-numbers: false
 
-t.test(x=mb, y=ma, paired = TRUE)
+t.test(x=ma, y=mb, alternative = "greater", 
+       paired = TRUE)
 
 ```
 
@@ -761,4 +762,115 @@ Como $D_{\text{obs}} = 0.1398 < D_{\text{tab}} = 0.565$, **não rejeitamos $H_0$
 3. O teste é mais conservativo para amostras pequenas.
 4. $F_0(x)$ deve ser completamente especificada.
 :::
+
+
+## Exemplo
+<hr>
+
+
+:::columns
+::::column
+```{r}
+#| code-line-numbers: false
+#| fig-height: 10
+  
+x <- c(-0.5, 0.1, 0.3, 0.8, 1.2)
+plot(ecdf(x), xlim=c(-5,5))
+x.aux <- seq(-5,5, length.out=1000)
+lines(x.aux, pnorm(x.aux, 0,1), col="red")
+
+```
+::::
+::::column
+
+```{r}
+#| code-line-numbers: false
+
+ks.test(x, "pnorm", 0, 1)
+```
+
+::::
+:::
+
+# Testes de Normalidade Mais Usuais
+
+## Teste de Shapiro-Wilk
+<hr>
+
+- **Indicado para**: Amostras pequenas a moderadas (n ≤ 50, mas pode ser usado até n ≈ 2000).
+- **Hipótese nula (H₀)**: Os dados seguem uma distribuição normal.
+- **Características**:
+  - Muito sensível a desvios da normalidade.
+  - **Recomendado quando** se precisa de maior poder estatístico em amostras pequenas.
+- **Vantagem**: Um dos mais poderosos para n pequeno.
+- **Desvantagem**: Perde eficiência com amostras grandes.
+
+---
+
+## Kolmogorov-Smirnov (K-S)
+<hr>
+
+- **Indicado para**: Amostras de qualquer tamanho, mas menos poderoso para detectar pequenas violações.
+- **Hipótese nula (H₀)**: A distribuição empírica dos dados é igual à normal.
+- **Características**:
+  - Baseia-se na maior distância entre a função de distribuição empírica e a teórica.
+  - A versão com correção de **Lilliefors** é usada quando os parâmetros da normal são estimados da amostra.
+- **Vantagem**: Aplicável a várias distribuições.
+- **Desvantagem**: Menos sensível que Shapiro-Wilk.
+
+## Anderson-Darling
+<hr>
+
+- **Indicado para**: Amostras pequenas a grandes.
+- **Hipótese nula (H₀)**: Os dados seguem uma distribuição normal.
+- **Características**:
+  - Dá **mais peso às caudas** da distribuição (útil se há suspeitas de problemas nas caudas).
+- **Vantagem**: Mais sensível a desvios nas extremidades (caudas).
+- **Desvantagem**: Nem sempre retorna um valor-p diretamente (depende do software).
+
+
+## Lilliefors
+<hr>
+
+- **Descrição**: É uma adaptação do teste K-S, usada quando a média e desvio padrão são estimados da amostra.
+- **Usado frequentemente em**: Softwares como SPSS.
+- **Similaridades**: Mesmo princípio do K-S, mas com ajuste.
+
+
+## Jarque-Bera
+<hr>
+
+- **Indicado para**: Amostras grandes.
+- **Hipótese nula (H₀)**: Os dados têm **assimetria (skewness)** e **curtose (kurtosis)** compatíveis com a normal.
+- **Características**:
+  - Usa estatísticas de **assimetria e curtose** para verificar desvio da normalidade.
+- **Vantagem**: Simples e computacionalmente leve.
+- **Desvantagem**: Fraco com amostras pequenas; ignora outros aspectos da forma da distribuição.
+
+
+
+## Exercícios:
+<hr>
+
+> Baixe o banco de dados `dadosInf2_ex.xlsx` no repositório do github e responda as seguintes perguntas:
+
+
+1. O peso médio antes do tratamento difere entre os participantes do grupo **Controle** e do grupo **Tratamento**?
+
+2. A média da pressão arterial **antes do tratamento** difere entre os **homens** e as **mulheres**?
+
+3. Existe diferença na altura média entre os participantes do grupo **Controle** e os do grupo **Tratamento**?
+
+4.  Há diferença significativa na idade média entre **homens** e **mulheres**?
+
+5. O peso médio dos participantes mudou após o tratamento?
+
+6. O tratamento foi eficaz em reduzir a pressão arterial dos participantes?
+
+* Coloque as respostas no formato relatório usando o `quarto`, por exemplo.
+
+
+
+
+
 
