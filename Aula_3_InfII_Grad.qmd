@@ -1,0 +1,453 @@
+---
+format:
+  revealjs:
+    theme: ["theme/q-theme.scss"]
+    slide-number: c/t
+    #logo: "faest.png"
+    #footer: "[https://github.com/paulocerqueirajr](https://https://github.com/paulocerqueirajr)"
+    code-copy: true
+    center-title-slide: false
+    lang: pt
+    transition: fade
+    transition-speed: default
+highlight-style: a11y
+code-link: true
+height: 1080
+width: 1900
+execute: 
+  eval: true
+  echo: true
+---
+
+<h1> Inferência Estatística II </h1>
+
+<h2> Testes de hipótestes específicos - Aula 2 </h2>
+
+<hr>
+
+<br>
+
+<h3> Prof. Paulo Cerqueira Jr - cerqueirajr@ufpa.br <br>
+Faculdade de Estatística - FAEST <br>
+Instituto de Ciências Exatas e Naturais - ICEN
+</h3>
+
+<h3>  </h3>
+<br>
+
+<h3> [https://github.com/paulocerqueirajr](https://https://github.com/paulocerqueirajr)
+
+![](github.jpg){.absolute top=550 left=845 height="90"}
+
+
+![](faest.png){.absolute top=5 left=1700 height="210"}
+
+<!-- ![](https://www.faest.icen.ufpa.br/images/110.png){.absolute top=5 left=1400 height="200"} -->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# [Introdução]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+
+## Introdução
+<br/>
+
+* Os testes não-paramétricos são muito úteis na ausência de normalidade ou na aplicação em variáveis em a natureza é não numérica.
+
+* Para uma amostra, temos alguns testes:
+
+   - Teste $\chi^{2}$ de aderência;
+   
+   - Teste $\chi^{2}$ de homogeneidade;
+   
+   - Teste $\chi^{2}$ de independência.
+   
+
+# [Teste $\chi^{2}$ de aderência]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+  
+>Objetivo: Verificar se uma população $P$ segue uma distribuição especificada $P_0$.  
+
+* Seja $X$ uma v.a. que caracteriza uma população $P$. Suponha que esta variável está categorizada em $s$ classes $A_1, A_2, \cdots, A_s$, com $p_i = P(X \in A_i), i = 1, 2, \cdots, s$. Queremos testar  
+
+$$H_0 : p_1 = p_{10}, p_2 = p_{20}, \cdots, p_s = p_{s0} \quad \text{versus} \quad H_1 : p_j \neq p_{j0}, \text{para algum } j,$$  
+
+onde $p_{i0}$ são os valores especificados pela hipótese $H_0$, ou seja, são as probabilidades conhecidas que determinam $P_0$.  
+
+**Tabela 1:** Frequências observadas (O) e esperadas (E)  
+
+| Frequências | $A_1$ | $A_2$ | $\cdots$ | $A_s$ | Total |  
+|-------------|-------|-------|---------|-------|-------|  
+| Observadas  | $O_1$ | $O_2$ | $\cdots$ | $O_s$ | $n$   |  
+| Esperadas   | $E_1$ | $E_2$ | $\cdots$ | $E_s$ | $n$   |  
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+O valor esperado, sob $H_0$, para a classe $A_i$ é dado por  
+
+$$E_i = n \times p_{i0}, \quad i = 1, 2, \cdots, s.$$  
+
+A estatística do teste é dada por  
+
+$$\chi^2 = \sum_{i=1}^s \frac{(O_i - E_i)^2}{E_i},$$  
+
+que sob $H_0$ tem distribuição qui-quadrado com $s - 1$ graus de liberdade. A regra de decisão consiste em rejeitar $H_0$, ao nível $\alpha$, se o valor da estatística for grande, ou seja, a região crítica do teste é dada por  
+
+$$RC = \{\chi^2_{obs} > k\},$$  
+
+onde $k$ é tal que $P\{\chi^2_{s-1} > k\} = \alpha$.  
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+
+> Exemplo: Um estudo sobre acidentes de trabalho numa indústria revelou que, em 150 acidentes, obtemos a distribuição da Tabela 1. O objetivo é testar a hipótese que os acidentes ocorrem com igual frequência nos 5 dias da semana.  
+
+**Tabela 1:** Acidentes de trabalho nos dias da semana  
+
+| Dia       | Segunda | Terça | Quarta | Quinta | Sexta | Total |  
+|-----------|---------|-------|--------|--------|-------|-------|  
+| $O_i$     | 32      | 40    | 20     | 25     | 33    | 150   |  
+
+
+. . .
+
+
+> Solução:
+
+1. **Hipóteses:**  
+   - $H_0$: Os acidentes ocorrem com igual frequência nos 5 dias ($p_1 = p_2 = \cdots = p_5 = 0.2$).  
+   - $H_1$: Pelo menos um dia tem frequência diferente dos demais.
+
+2. **Cálculo das Frequências Esperadas ($E_i$):**  
+   Sob $H_0$, cada dia deve ter:  
+   $$E_i = n \times p_{i0} = 150 \times 0.2 = 30 \quad \text{(para todos os dias)}$$
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+3. **Estatística do Teste ($\chi^2$):**  
+   $$\chi^2 = \sum_{i=1}^5 \frac{(O_i - E_i)^2}{E_i} = \frac{(32-30)^2}{30} + \frac{(40-30)^2}{30} + \frac{(20-30)^2}{30} + \frac{(25-30)^2}{30} + \frac{(33-30)^2}{30}$$  
+   $$\chi^2 = \frac{4}{30} + \frac{100}{30} + \frac{100}{30} + \frac{25}{30} + \frac{9}{30} = 7.933$$
+
+4. **Região Crítica ($\alpha$ = 0.05):**  
+   - Graus de liberdade: $s - 1 = 4$.  
+   - Valor crítico da tabela $\chi^2_{4;0.05} = 9.488$.  
+   - Regra de decisão: Rejeitar $H_0$ se $\chi^2_{obs} > 9.488$.
+
+5. **Conclusão:**  
+   Como $7.933 < 9.488$, **não rejeitamos $H_0$**. Não há evidências estatísticas para afirmar que os acidentes ocorrem com frequências diferentes nos dias da semana.
+
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+**Tabela de Cálculo Detalhado:**
+
+| Dia       | $O_i$ | $E_i$ | $(O_i - E_i)^2/E_i$ |  
+|-----------|-------|-------|---------------------|  
+| Segunda   | 32    | 30    | 0.133               |  
+| Terça     | 40    | 30    | 3.333               |  
+| Quarta    | 20    | 30    | 3.333               |  
+| Quinta    | 25    | 30    | 0.833               |  
+| Sexta     | 33    | 30    | 0.300               |  
+| **Total** | 150   | 150   | **7.933**           |  
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+> Exemplo: Considere os dados abaixo, que supostamente são uma amostra de tamanho 30 de uma distribuição normal, de média 10 e variância 25.  
+
+
+|Dados|----|----|----|----|-----|
+|---|----|----|-----|----|-----|
+| 1,04 | 1,73 | 3,93 | 4,44 | 6,37 | 6,51 |  
+| 7,61 | 7,64 | 8,18 | 8,48 | 8,57 | 8,65 |  
+| 9,71 | 9,87 | 9,95 | 10,01 | 10,52 | 10,69 |  
+| 11,72 | 12,17 | 12,61 | 12,98 | 13,03 | 13,16 |  
+| 14,11 | 14,60 | 14,64 | 14,75 | 16,68 | 22,14 |  
+
+<br/>
+
+. . . 
+
+
+> Solução:
+
+1. Hipóteses:
+   * $H_0$: Os dados seguem uma $N(10, 25)$
+   * $H_1$: Os dados **não** seguem uma $N(10, 25)$
+
+
+## Teste $\chi^{2}$ de aderência
+
+2. Organizar os dados em classes
+   * Primeiro, devemos agrupar os dados em **k intervalos (classes)**. Como temos 30 observações, uma sugestão é usar $k \approx \sqrt{n}$, ou seja, **5 ou 6 classes**.
+   * Vamos usar **6 classes** com amplitudes aproximadamente iguais. Como os dados variam de 1,04 a 22,14, dividimos esse intervalo:
+      - Amplitude total: $22,14 - 1,04 = 21,10$
+      - Amplitude de cada classe: $21,10 / 6 \approx 3,52$
+
+As classes ficam:
+
+| Classe    | Intervalo        | Frequência Observada ($O_i$) |
+| --------- | ---------------- | ---------------------------- |
+| 1         | $[1,04 ; 4,56)$   | 3                            |
+| 2         | $[4,56 ; 8,08)$   | 5                            |
+| 3         | $[8,08 ; 11,60)$  | 8                            |
+| 4         | $[11,60 ; 15,12)$ | 10                           |
+| 5         | $[15,12 ; 18,64)$ | 3                            |
+| 6         | $[18,64 ; 22,16]$ | 1                            |
+| **Total** |                  | 30                           |
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+3. Calcular Frequências Esperadas ($E_i$)
+
+* Com base na $N(10,25) = N(10,5^2)$, para cada classe calculamos a probabilidade $p_i$ de um valor cair naquele intervalo, e multiplicamos por $n = 30$:
+
+* Utilizando a padronização, temos que $Z = \frac{x - \mu}{\sigma} = \frac{x - 10}{5}\sim N(0,1)$
+
+* Calculamos:
+
+| Classe | Intervalo      | $Z$ lim.inf | $Z$ lim. sup | $p_i$ (usando tabela normal)                           | $E_i = 30 \cdot p_i$ |
+| ------ | -------------- | ----------------- | ----------------- | ------------------------------------------------------ | -------------------- |
+| 1      | $[1,04;4,56)$   | -1.79      | -1.09       | $\Phi(-1.09) - \Phi(-1.79) = 0.1379 - 0.0367 = 0.1012$ | 3.04                 |
+| 2      | $[4,56;8,08)$   | -1.09             | -0.38             | $0.3516 - 0.1379 = 0.2137$                             | 6.41                 |
+| 3      | $[8,08;11,60)$  | -0.38             | 0.32              | $0.6255 - 0.3516 = 0.2739$                             | 8.22                 |
+| 4      | $[11,60;15,12)$ | 0.32              | 1.02              | $0.8461 - 0.6255 = 0.2206$                             | 6.62                 |
+| 5      | $[15,12;18,64)$ | 1.02              | 1.73              | $0.9582 - 0.8461 = 0.1121$                             | 3.36                 |
+| 6      | $[18,64;22,16]$ | 1.73              | 2.43              | $0.9925 - 0.9582 = 0.0343$                             | 1.03                 |
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+4. Estatística do teste qui-quadrado
+
+A fórmula é:
+
+$$
+\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
+$$
+
+. . .
+
+
+Calculando cada termo:
+
+| Classe    | $O_i$ | $E_i$ | $(O_i - E_i)^2 / E_i$ |
+| --------- | ----- | ----- | --------------------- |
+| 1         | 3     | 3.04  | 0.0005                |
+| 2         | 5     | 6.41  | 0.3100                |
+| 3         | 8     | 8.22  | 0.0059                |
+| 4         | 10    | 6.62  | 1.7302                |
+| 5         | 3     | 3.36  | 0.0385                |
+| 6         | 1     | 1.03  | 0.0009                |
+| **Total** |       |       | **$\chi^2 = 2.09$**   |
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+5. Grau de liberdade (a média e variância são **especificadas** e não estimadas)
+
+$$
+gl = \text{nº de classes} - 1 - \text{nº de parâmetros estimados} = 6-1=5
+$$
+
+6. Valor crítico: Para $\alpha = 0{,}05$, e $gl = 5$, temos:
+
+$$
+\chi^2_{0{,}05; 5} \approx 11{,}07
+$$
+
+7. Conclusão: Como:
+
+$$
+\chi^2_{\text{calculado}} = 2{,}09 < 11{,}07 = \chi^2_{\text{crítico}}
+$$
+
+**Não rejeitamos** a hipótese nula. Dessa forma,os dados são compatíveis com uma distribuição normal $N(10, 25)$, ao nível de significância de 5%.
+
+
+## Teste $\chi^{2}$ de aderência
+<hr>
+
+
+> Exercício: Gols por Partida de um Time de Futebol
+
+Um analista esportivo quer saber se o número de **gols por partida** marcados por um determinado time em uma temporada segue uma **distribuição de Poisson**, com média de $\lambda = 1{,}5$ gols por jogo. Ele coleta os dados de **40 jogos** e registra a **frequência de gols por partida**:
+
+| Número de Gols | Frequência Observada |
+| -------------- | -------------------- |
+| 0              | 5                    |
+| 1              | 14                   |
+| 2              | 12                   |
+| 3              | 6                    |
+| 4              | 2                    |
+| 5 ou mais      | 1                    |
+| **Total**      | 40                   |
+
+
+**Objetivo:** Testar, ao nível de 5% de significância, se a distribuição do número de gols por jogo segue uma **distribuição de Poisson com $\lambda = 1{,}5$**.
+
+
+
+
+# [Teste $\chi^{2}$ de Homogeneidade]{style="float:right;text-align:right;"} {background-color="#00008B"}
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+
+> Objetivo: Comparar duas ou mais populações.  
+
+Suponha novamente que a v.a. $X$ assume valores em $s$ categorias, e deseja-se comparar a distribuição da v.a. $X$ em $r$ populações $P_1, \cdots, P_r$, com base em amostras de cada população.  
+
+**Tabela:** Frequências observadas (O) nas amostras de cada população  
+
+| População | $A_1$ | $A_2$ | $\cdots$ | $A_s$ | Total |  
+|-----------|-------|-------|---------|-------|-------|  
+| $P_1$     | $O_{11}$ | $O_{12}$ | $\cdots$ | $O_{1s}$ | $n_1$ |  
+| $P_2$     | $O_{21}$ | $O_{22}$ | $\cdots$ | $O_{2s}$ | $n_2$ |  
+| $\vdots$  | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ |  
+| $P_r$     | $O_{r1}$ | $O_{r2}$ | $\cdots$ | $O_{rs}$ | $n_r$ |  
+| Total     | $n_1$ | $n_2$ | $\cdots$ | $n_s$ | $n$ |  
+
+Neste caso, os valores esperados sob $H_0$ para a população $i$ na categoria $A_j$ são dados por  
+
+$$E_{ij} = \frac{n_i \times n_j}{n}, \quad i = 1, 2, \cdots, r; \quad j = 1, 2, \cdots, s.$$ 
+
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+<hr>
+
+* `Estatística do Teste`:
+
+$$\chi^2 = \sum_{i=1}^r \sum_{j=1}^s \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$
+
+* `Distribuição sob` $H_0$: $\chi^2$ com $(r-1) \times (s-1)$ graus de liberdade.  
+
+* `Região Crítica`: Rejeitar $H_0$ se $\chi^2_{obs} > k$, onde $P(\chi^2_{(r-1)(s-1)} > k) = \alpha$.
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+
+> Exemplo: Uma prova básica de estatística foi aplicada a 100 alunos de Ciências Humanas e a 100 alunos de Biológicas. As notas foram classificadas segundo os graus A, B, C, D e E (onde D o aluno não recebe o crédito e E o aluno foi reprovado).
+
+* `Objetivo:` Testar se as distribuições de notas são iguais entre alunos de Ciências Humanas e Biológicas.
+
+**Tabela:** Resultados da prova 
+
+| Aluno de       | A  | B  | C  | D  | E  | Total |
+|----------------|----|----|----|----|----|-------|
+| C. Humanas     | 15 | 20 | 30 | 20 | 15 | 100   |
+| C. Biológicas  | 8  | 23 | 18 | 34 | 17 | 100   |
+| **Total**      | 23 | 43 | 48 | 54 | 32 | 200   |
+
+. . . 
+
+> Solução:
+
+1. Definição das Hipóteses
+   - **$H_0:$** As distribuições das notas são as mesmas para ambos os grupos (Humanas e Biológicas).
+   - **$H_1:$** As distribuições diferem entre os grupos.
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+
+2. Cálculo das Frequências Esperadas ($E_{ij}$): Sob $H_0$, as frequências esperadas são calculadas por:  
+
+$$
+E_{ij} = \frac{(\text{Total da linha } i) \times (\text{Total da coluna } j)}{\text{Total geral}}
+$$
+
+**Exemplo para Célula (Humanas, A):**  
+$$
+E_{11} = \frac{100 \times 23}{200} = 11.5
+$$
+
+**Tabela de Valores Esperados:**  
+
+| Aluno de       | A    | B    | C    | D    | E    |
+|----------------|------|------|------|------|------|
+| C. Humanas     | 11.5 | 21.5 | 24   | 27   | 16   |
+| C. Biológicas  | 11.5 | 21.5 | 24   | 27   | 16   |
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+<hr>
+
+3. Cálculo da Estatística Qui-Quadrado $\chi^{2}$
+
+$$
+\chi^2 = \sum \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+
+**Cálculos Parciais:**  
+- Humanas, A: $\frac{(15-11.5)^2}{11.5} = 1.09$  
+- Biológicas, D: $\frac{(34-27)^2}{27} = 1.81$  
+  
+
+**Valor Total de $\chi^2$:**  
+
+$$
+\chi^2_{\text{obs}} \approx 13.14 \quad (\text{soma de todas as contribuições})
+$$
+
+4. Determinação da Região Crítica
+   - **Graus de Liberdade:** $(r-1)(c-1) = (2-1)(5-1) = 4$  
+   - **Valor Crítico (α = 0.05):** $\chi^2_{4;0.05} = 9.488$ (da tabela qui-quadrado).
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+<hr>
+
+5. Decisão e Conclusão
+   - **Regra de Decisão:** Rejeitar H₀ se $\chi^2_{\text{obs}} > 9.488$.  
+   - **Resultado:** Como $13.14 > 9.488$, **rejeitamos H₀**.  
+
+6: **Conclusão:** Há evidências estatísticas ($\alpha$ = 0.05) de que as distribuições de notas diferem entre alunos de Ciências Humanas e Biológicas.
+
+
+## Teste $\chi^{2}$ de Homogeneidade  
+<hr>
+
+### **Tabela de Resumo do Teste Qui-Quadrado de Homogeneidade**
+
+| **Categoria** | **Grupo**       | **Oᵢⱼ (Observado)** | **Eᵢⱼ (Esperado)** | **(Oᵢⱼ - Eᵢⱼ)² / Eᵢⱼ** | **Contribuição para χ²** |
+|--------------|----------------|--------------------|--------------------|------------------------|--------------------------|
+| **A**        | Humanas | 15                | 11.5               | \(\frac{(15-11.5)^2}{11.5} = 1.09\) | 1.09 |
+| **A**        | Biológicas | 8               | 11.5               | \(\frac{(8-11.5)^2}{11.5} = 1.07\)  | 1.07 |
+| **B**        | Humanas | 20                | 21.5               | \(\frac{(20-21.5)^2}{21.5} = 0.10\) | 0.10 |
+| **B**        | Biológicas | 23               | 21.5               | \(\frac{(23-21.5)^2}{21.5} = 0.10\) | 0.10 |
+| **C**        | Humanas | 30                | 24                 | \(\frac{(30-24)^2}{24} = 1.50\)     | 1.50 |
+| **C**        | Biológicas | 18               | 24                 | \(\frac{(18-24)^2}{24} = 1.50\)     | 1.50 |
+| **D**        | Humanas | 20                | 27                 | \(\frac{(20-27)^2}{27} = 1.81\)     | 1.81 |
+| **D**        | Biológicas | 34               | 27                 | \(\frac{(34-27)^2}{27} = 1.81\)     | 1.81 |
+| **E**        | Humanas | 15                | 16                 | \(\frac{(15-16)^2}{16} = 0.06\)     | 0.06 |
+| **E**        | Biológicas | 17               | 16                 | \(\frac{(17-16)^2}{16} = 0.06\)     | 0.06 |
+| **Total**    |                 | **200**           | **200**            | **Soma**               | **χ² = 13.14** |
+
+
+
+
+
+
+
+
+
+
