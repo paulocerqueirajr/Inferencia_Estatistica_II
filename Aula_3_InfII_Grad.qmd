@@ -202,11 +202,11 @@ As classes ficam:
 
 | Classe    | Intervalo        | Frequência Observada ($O_i$) |
 | --------- | ---------------- | ---------------------------- |
-| 1         | $[1,04 ; 4,56)$   | 3                            |
-| 2         | $[4,56 ; 8,08)$   | 5                            |
-| 3         | $[8,08 ; 11,60)$  | 8                            |
+| 1         | $[1,04 ; 4,56)$   | 4                            |
+| 2         | $[4,56 ; 8,08)$   | 4                            |
+| 3         | $[8,08 ; 11,60)$  | 10                            |
 | 4         | $[11,60 ; 15,12)$ | 10                           |
-| 5         | $[15,12 ; 18,64)$ | 3                            |
+| 5         | $[15,12 ; 18,64)$ | 1                            |
 | 6         | $[18,64 ; 22,16]$ | 1                            |
 | **Total** |                  | 30                           |
 
@@ -250,13 +250,13 @@ Calculando cada termo:
 
 | Classe    | $O_i$ | $E_i$ | $(O_i - E_i)^2 / E_i$ |
 | --------- | ----- | ----- | --------------------- |
-| 1         | 3     | 3.04  | 0.0005                |
-| 2         | 5     | 6.41  | 0.3100                |
-| 3         | 8     | 8.22  | 0.0059                |
-| 4         | 10    | 6.62  | 1.7302                |
-| 5         | 3     | 3.36  | 0.0385                |
+| 1         | 4     | 3.04  | 0.3032                |
+| 2         | 4     | 6.41  | 0.9061                |
+| 3         | 10     | 8.22  | 0.3855                |
+| 4         | 10    | 6.62  | 1.7257                |
+| 5         | 1     | 3.36  | 1,6576                |
 | 6         | 1     | 1.03  | 0.0009                |
-| **Total** |       |       | **$\chi^2 = 2.09$**   |
+| **Total** |       |       | **$\chi^2 = 4,9789$**   |
 
 
 ## Teste $\chi^{2}$ de aderência
@@ -277,7 +277,7 @@ $$
 7. Conclusão: Como:
 
 $$
-\chi^2_{\text{calculado}} = 2{,}09 < 11{,}07 = \chi^2_{\text{crítico}}
+\chi^2_{\text{calculado}} = 4{,}9789 < 11{,}07 = \chi^2_{\text{crítico}}
 $$
 
 **Não rejeitamos** a hipótese nula. Dessa forma,os dados são compatíveis com uma distribuição normal $N(10, 25)$, ao nível de significância de 5%.
@@ -426,28 +426,212 @@ $$
 ## Teste $\chi^{2}$ de Homogeneidade  
 <hr>
 
-### **Tabela de Resumo do Teste Qui-Quadrado de Homogeneidade**
+**Tabela de Resumo do Teste Qui-Quadrado de Homogeneidade**
 
 | **Categoria** | **Grupo**       | **Oᵢⱼ (Observado)** | **Eᵢⱼ (Esperado)** | **(Oᵢⱼ - Eᵢⱼ)² / Eᵢⱼ** | **Contribuição para χ²** |
 |--------------|----------------|--------------------|--------------------|------------------------|--------------------------|
-| **A**        | Humanas | 15                | 11.5               | \(\frac{(15-11.5)^2}{11.5} = 1.09\) | 1.09 |
-| **A**        | Biológicas | 8               | 11.5               | \(\frac{(8-11.5)^2}{11.5} = 1.07\)  | 1.07 |
-| **B**        | Humanas | 20                | 21.5               | \(\frac{(20-21.5)^2}{21.5} = 0.10\) | 0.10 |
-| **B**        | Biológicas | 23               | 21.5               | \(\frac{(23-21.5)^2}{21.5} = 0.10\) | 0.10 |
-| **C**        | Humanas | 30                | 24                 | \(\frac{(30-24)^2}{24} = 1.50\)     | 1.50 |
-| **C**        | Biológicas | 18               | 24                 | \(\frac{(18-24)^2}{24} = 1.50\)     | 1.50 |
-| **D**        | Humanas | 20                | 27                 | \(\frac{(20-27)^2}{27} = 1.81\)     | 1.81 |
-| **D**        | Biológicas | 34               | 27                 | \(\frac{(34-27)^2}{27} = 1.81\)     | 1.81 |
-| **E**        | Humanas | 15                | 16                 | \(\frac{(15-16)^2}{16} = 0.06\)     | 0.06 |
-| **E**        | Biológicas | 17               | 16                 | \(\frac{(17-16)^2}{16} = 0.06\)     | 0.06 |
-| **Total**    |                 | **200**           | **200**            | **Soma**               | **χ² = 13.14** |
+| **A**        | Humanas | 15                | 11.5               | $\frac{(15-11.5)^2}{11.5} = 1.09$ | 1.09 |
+| **A**        | Biológicas | 8               | 11.5               | $\frac{(8-11.5)^2}{11.5} = 1.07$  | 1.07 |
+| **B**        | Humanas | 20                | 21.5               | $\frac{(20-21.5)^2}{21.5} = 0.10$ | 0.10 |
+| **B**        | Biológicas | 23               | 21.5               | $\frac{(23-21.5)^2}{21.5} = 0.10$ | 0.10 |
+| **C**        | Humanas | 30                | 24                 | $\frac{(30-24)^2}{24} = 1.50$     | 1.50 |
+| **C**        | Biológicas | 18               | 24                 | $\frac{(18-24)^2}{24} = 1.50$     | 1.50 |
+| **D**        | Humanas | 20                | 27                 | $\frac{(20-27)^2}{27} = 1.81$     | 1.81 |
+| **D**        | Biológicas | 34               | 27                 | $\frac{(34-27)^2}{27} = 1.81$     | 1.81 |
+| **E**        | Humanas | 15                | 16                 | $\frac{(15-16)^2}{16} = 0.06$     | 0.06 |
+| **E**        | Biológicas | 17               | 16                 | $\frac{(17-16)^2}{16} = 0.06$     | 0.06 |
+| **Total**    |                 | **200**           | **200**            | **Soma**               | **$\chi^2$ = 13.14** |
 
 
 
 
 
 
+## Teste $\chi^{2}$ de Homogeneidade  
+<hr>
+
+> Exercício: Preferência de Gêneros de Jogos entre Plataformas
+
+Um estudo investigou se a preferência por gêneros de jogos eletrônicos é homogênea entre jogadores de PC e Console. Foram entrevistados 400 jogadores, e os resultados estão na tabela abaixo:
+
+| Plataforma  | Ação | RPG  | Estratégia | Esportes | Total |
+|-------------|------|------|------------|----------|-------|
+| **PC**      | 60   | 80   | 70         | 30       | 240   |
+| **Console** | 40   | 50   | 30         | 40       | 160   |
+| **Total**   | 100  | 130  | 100        | 70       | 400   |
+
+<br/>
+
+**Objetivo:** Testar se a distribuição de preferências por gêneros é a mesma para jogadores de PC e Console ($\alpha$ = 0.05).
 
 
 
+# [Teste $\chi^2$ de Independência]{style="float:right;text-align:right;"} {background-color="#00008B"}  
+
+## Teste $\chi^2$ de Independência
+<hr>
+<br/>
+
+**Objetivo:** Verificar se duas v.a.'s qualitativas são independentes.  
+
+* Sejam $X \in Y$ duas v.a.'s qualitativas com $r$ e $s$ categorias, respectivamente. 
+
+* Seja $p_{ij}$ a probabilidade de um indivíduo ser classificado nas categorias $i$ e $j$ ($i = 1, \cdots , r$ e $j = 1, \cdots , s$) simultaneamente. 
+
+* Seja $p_i = \sum_{j=1}^s p_{ij}$ a probabilidade marginal de um indivíduo ser classificado na categoria $i$ da v.a. $X$, e $p_j = \sum_{i=1}^r p_{ij}$ a probabilidade marginal de um indivíduo ser classificado na categoria $j$ da v.a. $Y$. 
+
+* A hipótese de independência pode ser escrita como  
+
+$$H_0 : p_{ij} = p_i \times p_j, \, \text{para todo par}(i,j),$$  
+
+e a hipótese alternativa $H_1 : p_{ij} \neq p_i \times p_j, \, \text{para algum par}(i,j)$. 
+
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+* A estatística do teste é dada por  
+
+$$\chi^2 = \sum_{i=1}^r \sum_{j=1}^s \frac{(O_{ij} - E_{ij})^2}{E_{ij}}.$$  
+
+
+Novamente temos  
+
+$$E_{ij} = \frac{n_i \times n_j}{n}, \quad i = 1, 2, \cdots , r \quad j = 1, 2, \cdots , s,$$  
+
+e a regra de decisão consiste em rejeitar $H_0$, ao nível $\alpha$, se o valor da estatística for grande, ou seja, a região crítica do teste é dada por  
+
+$$RC = \{ \chi^2_{obs} > k \},$$  
+
+onde $k$ é tal que $P\{ \chi^2_{(r-1) \times (s-1)} > k \} = \alpha$.  
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+**Exemplo:** Suponha que o grau de satisfação de consumidores de um produto está sendo estudado, em diferentes classes de renda familiar. Para uma amostra de 300 consumidores, obteve-se os resultados na Tabela. É possível afirmar que a renda influencia o grau de satisfação?  
+
+**Tabela:** Grau de satisfação e renda dos consumidores  
+
+|    | Grau de satisfação    |    |  
+|---|---|---|---|  
+| Renda   | Insatisfeito | Satisfeito | Muito satisfeito | Total    |  
+| Faixa A   | 55    | 30    | 15    | 100    |  
+| Faixa B   | 28    | 45    | 27    | 100    |  
+| Faixa C   | 8    | 40    | 52    | 100    |  
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+
+> Solução:
+
+* **Passo 1: Definir as hipóteses**  
+   - **$H_0$ (Hipótese nula):** A renda e o grau de satisfação são independentes (não há relação).  
+   - **$H_1$ (Hipótese alternativa):** A renda e o grau de satisfação são dependentes (há relação).  
+
+* **Passo 2: Calcular as frequências esperadas ($E_{ij}$)**  
+A fórmula para calcular as frequências esperadas é:  
+
+$$
+E_{ij} = \frac{\text{Total da linha } i \times \text{Total da coluna } j}{\text{Total geral}}
+$$
+
+## Teste $\chi^2$ de Independência
+<hr>
+<br/>
+
+
+Aplicando aos dados da tabela de valores esperados:  
+
+| Renda   | Insatisfeito | Satisfeito | Muito satisfeito | Total |  
+|---------|-------------|------------|------------------|-------|  
+| Faixa A | $\frac{100 \times 91}{300} = 30.33$ | $\frac{100 \times 115}{300} = 38.33$ | $\frac{100 \times 94}{300} = 31.33$ | 100 |  
+| Faixa B | $\frac{100 \times 91}{300} = 30.33$ | $\frac{100 \times 115}{300} = 38.33$ | $\frac{100 \times 94}{300} = 31.33$ | 100 |  
+| Faixa C | $\frac{100 \times 91}{300} = 30.33$ | $\frac{100 \times 115}{300} = 38.33$ | $\frac{100 \times 94}{300} = 31.33$ | 100 |  
+| **Total** | 91 | 115 | 94 | 300 |  
+
+
+* **Passo 3: Calcular a estatística qui-quadrado ($\chi^2$)**  
+A fórmula é:  
+
+$$
+\chi^2 = \sum_{i=1}^{r} \sum_{j=1}^{s}\frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+
+Calculando para cada célula:  
+
+| Célula ($O_{ij}$, $E_{ij}$) | Cálculo | Contribuição para $\chi^2$ |  
+|------------------|---------|----------------------|  
+| (55, 30.33) | $\frac{(55 - 30.33)^2}{30.33}$ | **19.88** |  
+| (30, 38.33) | $\frac{(30 - 38.33)^2}{38.33}$ | **1.81** |  
+| (15, 31.33) | $\frac{(15 - 31.33)^2}{31.33}$ | **8.56** |  
+| (28, 30.33) | $\frac{(28 - 30.33)^2}{30.33}$ | **0.18** |  
+| (45, 38.33) | $\frac{(45 - 38.33)^2}{38.33}$ | **1.17** |  
+| (27, 31.33) | $\frac{(27 - 31.33)^2}{31.33}$ | **0.60** |  
+| (8, 30.33) | $\frac{(8 - 30.33)^2}{30.33}$ | **16.34** |  
+| (40, 38.33) | $\frac{(40 - 38.33)^2}{38.33}$ | **0.07** |  
+| (52, 31.33) | $\frac{(52 - 31.33)^2}{31.33}$ | **13.65** |  
+|---|---|62.26|
+
+<!-- **Soma das contribuições:**   -->
+
+<!-- $$ -->
+<!-- \chi^2 = 19.88 + 1.81 + 8.56 + 0.18 + 1.17 + 0.60 + 16.34 + 0.07 + 13.65 = 62.26. -->
+<!-- $$ -->
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+
+* **Passo 4:** Para uma tabela $r \times s$, os graus de liberdade são: $gl = (r - 1) \times (s - 1) = (3 - 1) \times (3 - 1) = 4$.
+
+* **Passo 5:** 
+   - **Nível de significância ($\alpha$):** Vamos adotar $\alpha = 0.05$.  
+   - **Valor crítico ($\chi^{2}_{4; 0.05}$):** Consultando a tabela qui-quadrado, encontramos **9.488**.  
+
+**Regra de decisão:**  
+  - Se $\chi^2_{\text{obs}} > \chi^2_{\text{crítico}}$, rejeitamos H₀.  
+  
+**Resposta final:** Rejeitamos $H_0$, concluindo que há evidências estatísticas para afirmar que **a renda influencia o grau de satisfação** dos consumidores, ao nível de 5% de significância..
+
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+
+:::{.callout-note}
+## Observações:
+
+1) A Tabela de valores observados é denominada *Tabela de Contingência $r \times s$* ($r$ linhas e $s$ colunas);  
+2) No caso de tabelas $2 \times 2$, em que ocorrer algum valor esperado menor que 5, deve-se usar um outro teste de independência, denominado *Teste Erato de Fisher*;  
+3) Quando ocorrem valores esperados menores que 5, o teste $\chi^2$ não apresenta bons resultados.  
+
+:::
+
+
+
+## Teste $\chi^2$ de Independência
+<hr>
+
+> **Exercício: Influência do Gênero do Jogador na Preferência por Categorias de Jogos Eletrônicos**  
+
+Uma empresa de jogos eletrônicos deseja investigar se o **gênero do jogador** está associado à **preferência por categorias de jogos**. Para isso, foi realizada uma pesquisa com **200 jogadores**, e os resultados estão na tabela abaixo:  
+
+| Gênero  | Ação/Aventura | Esportes | Estratégia | Total |  
+|---------|--------------|----------|------------|-------|  
+| Masculino | 50          | 30       | 20        | 100   |  
+| Feminino  | 20          | 40       | 40        | 100   |  
+| **Total** | **70**      | **70**   | **60**    | **200** |  
+
+**Pergunta:** Com base nos dados, teste a hipótese de que **o gênero do jogador é independente da preferência por categoria de jogo** (use $\alpha = 0.05$).  
 
