@@ -1527,7 +1527,7 @@ A fórmula é:</li>
 </ul></li>
 </ul>
 <p><strong>Regra de decisão:</strong><br>
-- Se <span class="math inline">\(\chi^2_{\text{obs}} &gt; \chi^2_{\text{crítico}}\)</span>, rejeitamos H₀.</p>
+- Se <span class="math inline">\(\chi^2_{\text{obs}} &gt; \chi^2_{\text{crítico}}\)</span>, rejeitamos <span class="math inline">\(H_0\)</span>.</p>
 <p><strong>Resposta final:</strong> Rejeitamos <span class="math inline">\(H_0\)</span>, concluindo que há evidências estatísticas para afirmar que <strong>a renda influencia o grau de satisfação</strong> dos consumidores, ao nível de 5% de significância..</p>
 </section>
 <section id="teste-chi2-de-independência-8" class="slide level2">
@@ -1595,6 +1595,275 @@ A fórmula é:</li>
 </tbody>
 </table>
 <p><strong>Pergunta:</strong> Com base nos dados, teste a hipótese de que <strong>o gênero do jogador é independente da preferência por categoria de jogo</strong> (use <span class="math inline">\(\alpha = 0.05\)</span>).</p>
+</section></section>
+<section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson" class="title-slide slide level1" data-background-color="#00008B">
+<h1><span style="float:right;text-align:right;">Teste para o Coeficiente de Correlação de Pearson</span></h1>
+
+</section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson-1" class="slide level2">
+<h2>Teste para o Coeficiente de Correlação de Pearson</h2>
+<hr>
+<blockquote>
+<p>Objetivos: Verificar se existe <strong>correlação linear significativa</strong> entre duas variáveis quantitativas <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> com base em uma amostra.</p>
+</blockquote>
+<ul>
+<li>Definição do Coeficiente de Correlação</li>
+</ul>
+<p>O <strong>coeficiente de correlação de Pearson</strong>, denotado por <span class="math inline">\(r\)</span>, mede a <strong>intensidade e direção</strong> da relação linear entre duas variáveis:</p>
+<p><span class="math display">\[
+r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(-1 \leq r \leq 1\)</span></li>
+<li><span class="math inline">\(r &gt; 0\)</span>: correlação positiva</li>
+<li><span class="math inline">\(r &lt; 0\)</span>: correlação negativa</li>
+<li><span class="math inline">\(r = 0\)</span>: ausência de correlação linear</li>
+</ul>
+</section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson-2" class="slide level2">
+<h2>Teste para o Coeficiente de Correlação de Pearson</h2>
+<hr>
+<ul>
+<li><p>Queremos testar:</p>
+<ul>
+<li><strong>Hipótese nula (<span class="math inline">\(H_0\)</span>):</strong> <span class="math inline">\(\rho = 0\)</span> (não há correlação na população)</li>
+<li><strong>Hipótese alternativa (<span class="math inline">\(H_1\)</span>):</strong>
+<ul>
+<li><span class="math inline">\(\rho \neq 0\)</span>: teste bilateral</li>
+<li><span class="math inline">\(\rho &gt; 0\)</span>: teste unilateral à direita</li>
+<li><span class="math inline">\(\rho &lt; 0\)</span>: teste unilateral à esquerda</li>
+</ul></li>
+</ul></li>
+<li><p>A estatística de teste <span class="math inline">\(t\)</span> é dada por:</p></li>
+</ul>
+<p><span class="math display">\[
+t = \frac{r \sqrt{n - 2}}{\sqrt{1 - r^2}}, \sim t_{n-2}
+\]</span></p>
+<ul>
+<li>Regra de decisão para a rejeição da Hipótese Nula:
+<ul>
+<li>Calcular o valor da estatística <span class="math inline">\(t\)</span></li>
+<li>Comparar com o valor crítico da tabela t.</li>
+<li>Ou: calcular o <strong>p-valor</strong> e comparar com o nível de significância <span class="math inline">\(\alpha\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson-3" class="slide level2">
+<h2>Teste para o Coeficiente de Correlação de Pearson</h2>
+<hr>
+<blockquote>
+<p>Exemplo: Considere os seguintes dados referentes a horas de sono (Y) e notas na prova (X) cinco alunos.</p>
+</blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>Horas de estudo (X)</th>
+<th>Nota na prova (Y)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>65</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>70</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>75</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>78</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>85</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li>Calcular as médias</li>
+</ol>
+<p><span class="math display">\[
+\bar{x} = \frac{2+3+5+6+8}{5} = 4{,}8, \quad
+\bar{y} = \frac{65+70+75+78+85}{5} = 74{,}6
+\]</span></p>
+</section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson-4" class="slide level2">
+<h2>Teste para o Coeficiente de Correlação de Pearson</h2>
+<hr>
+<ol start="2" type="1">
+<li>Tabela auxiliar</li>
+</ol>
+<table>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x_i\)</span></th>
+<th><span class="math inline">\(y_i\)</span></th>
+<th><span class="math inline">\(x_i - \bar{x}\)</span></th>
+<th><span class="math inline">\(y_i - \bar{y}\)</span></th>
+<th><span class="math inline">\((x_i - \bar{x})(y_i - \bar{y})\)</span></th>
+<th><span class="math inline">\((x_i - \bar{x})^2\)</span></th>
+<th><span class="math inline">\((y_i - \bar{y})^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>65</td>
+<td>-2,8</td>
+<td>-9,6</td>
+<td>26,88</td>
+<td>7,84</td>
+<td>92,16</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>70</td>
+<td>-1,8</td>
+<td>-4,6</td>
+<td>8,28</td>
+<td>3,24</td>
+<td>21,16</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>75</td>
+<td>0,2</td>
+<td>0,4</td>
+<td>0,08</td>
+<td>0,04</td>
+<td>0,16</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>78</td>
+<td>1,2</td>
+<td>3,4</td>
+<td>4,08</td>
+<td>1,44</td>
+<td>11,56</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>85</td>
+<td>3,2</td>
+<td>10,4</td>
+<td>33,28</td>
+<td>10,24</td>
+<td>108,16</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(\sum\)</span></strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>72,6</strong></td>
+<td><strong>22,8</strong></td>
+<td><strong>233,2</strong></td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="1">
+<li>Calcular <span class="math inline">\(r\)</span></li>
+</ol>
+<p><span class="math display">\[
+r = \frac{72{,}6}{\sqrt{22{,}8 \cdot 233{,}2}} = \frac{72{,}6}{\sqrt{5316{,}96}} = \frac{72{,}6}{72{,}94} = 0{,}995
+\]</span></p>
+</section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson-5" class="slide level2">
+<h2>Teste para o Coeficiente de Correlação de Pearson</h2>
+<hr>
+<ol start="4" type="1">
+<li>Estatística de Teste</li>
+</ol>
+<p><span class="math display">\[
+t = \frac{0{,}995 \cdot \sqrt{3}}{\sqrt{1 - 0{,}995^2}} = \frac{1{,}724}{\sqrt{0{,}009975}} = \frac{1{,}724}{0{,}0999} = 17{,}25
+\]</span></p>
+<ol start="5" type="1">
+<li>Valor Crítico</li>
+</ol>
+<p>Com <span class="math inline">\(n - 2 = 3\)</span> graus de liberdade e <span class="math inline">\(\alpha = 0{,}05\)</span> (teste bilateral):</p>
+<p><span class="math display">\[
+t_{0{,}025, 3} = 3{,}182
+\]</span></p>
+<p>Como <span class="math inline">\(|t| = 17{,}25 &gt; 3{,}182\)</span>, rejeitamos <span class="math inline">\(H_0\)</span>.</p>
+<ul>
+<li><strong>Conclusão:</strong> Há <strong>evidências estatísticas fortes</strong> de que existe <strong>correlação linear significativa</strong> entre as horas de estudo e as notas da prova.</li>
+</ul>
+</section>
+<section id="teste-para-o-coeficiente-de-correlação-de-pearson-6" class="slide level2">
+<h2>Teste para o Coeficiente de Correlação de Pearson</h2>
+<hr>
+<blockquote>
+<p>Exemplo: Correlação entre Chutes a Gol e Vitórias em Jogos de Futebol</p>
+</blockquote>
+<p>Um analista esportivo quer saber se há uma correlação linear significativa entre o <strong>número de chutes a gol</strong> de um time e o <strong>número de vitórias</strong> em uma sequência de partidas. Foram coletados dados de 8 jogos de um time:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Jogo</th>
+<th>Chutes a gol (<span class="math inline">\(X\)</span>)</th>
+<th>Vitórias (<span class="math inline">\(Y\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>7</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>12</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>14</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>9</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>11</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Teste as hipóteses ao nível de 5%.</p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
